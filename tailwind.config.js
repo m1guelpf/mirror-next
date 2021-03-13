@@ -57,6 +57,9 @@ module.exports = {
 							marginLeft: 'auto',
 							marginRight: 'auto',
 						},
+						'pre > code': {
+							fontSize: theme('fontSize.xs')[0],
+						},
 						code: {
 							fontWeight: theme('fontWeight.normal'),
 							background: theme('colors.gray.200'),
@@ -75,6 +78,9 @@ module.exports = {
 						strong: {
 							color: theme('colors.gray.300'),
 						},
+						'h1, h2, h3, h4, h5, h6': {
+							color: theme('colors.gray.200'),
+						},
 						a: {
 							color: theme('colors.yellow.400'),
 						},
@@ -89,8 +95,8 @@ module.exports = {
 							backgroundColor: theme('colors.gray.600'),
 						},
 						code: {
-							background: theme('colors.gray.200'),
-							color: theme('colors.gray.600'),
+							background: 'unset',
+							color: 'unset',
 						},
 					},
 				},
