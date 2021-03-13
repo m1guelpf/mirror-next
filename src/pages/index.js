@@ -40,6 +40,11 @@ const Index = ({ publication }) => (
 					)}
 				</article>
 			))}
+			{publication.entries.length === 0 && (
+				<div className="absolute inset-0 flex items-center justify-center h-full">
+					<p className="text-gray-400 font-medium">Patience</p>
+				</div>
+			)}
 		</div>
 	</Layout>
 )

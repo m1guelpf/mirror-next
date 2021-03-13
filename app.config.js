@@ -1,3 +1,3 @@
 module.exports = {
-	ensDomain: 'mint',
+	ensDomain: 'dev',
 }
