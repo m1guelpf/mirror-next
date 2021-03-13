@@ -1,6 +1,24 @@
 @import url('https://rsms.me/inter/inter.css');
 @import "react-medium-image-zoom/dist/styles.css";
+@import "nprogress/nprogress.css";
+
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#nprogress .bar {
+    background: #000000 !important;
+}
+
+#nprogress .peg {
+    box-shadow: 0 0 10px #000000, 0 0 5px #000000;
+}
+
+.dark #nprogress .bar {
+    background: theme('colors.yellow.400') !important;
+}
+
+.dark #nprogress .peg {
+    box-shadow: 0 0 10px theme('colors.yellow.400'), 0 0 5px theme('colors.yellow.400');
+}

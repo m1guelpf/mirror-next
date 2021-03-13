@@ -3,7 +3,7 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
 	purge: ['./src/**/*.{js,ts,jsx,tsx}'],
-	darkMode: false, // or 'media' or 'class'
+	darkMode: 'class',
 	theme: {
 		extend: {
 			colors: {
@@ -27,6 +27,15 @@ module.exports = {
 							marginTop: null,
 							marginBottom: null,
 						},
+						blockquote: {
+							borderLeftWidth: '2px',
+							fontStyle: null,
+							fontWeight: theme('fontWeight.normal'),
+							borderColor: theme('colors.blue.600'),
+						},
+						'blockquote p:first-of-type::before, blockquote p:last-of-type::after': {
+							content: 'unset !important',
+						},
 						a: {
 							color: theme('colors.blue.600'),
 							wordWrap: 'break-word',
@@ -41,6 +50,9 @@ module.exports = {
 							fontFamily: theme('fontFamily.mono').join(', '),
 							color: theme('colors.gray.400'),
 						},
+						'ul > li::before': {
+							backgroundColor: theme('colors.gray.400'),
+						},
 						'.twitter-tweet': {
 							marginLeft: 'auto',
 							marginRight: 'auto',
@@ -54,6 +66,31 @@ module.exports = {
 							'&::before, &::after': {
 								content: 'unset !important',
 							},
+						},
+					},
+				},
+				dark: {
+					css: {
+						color: theme('colors.gray.300'),
+						strong: {
+							color: theme('colors.gray.300'),
+						},
+						a: {
+							color: theme('colors.yellow.400'),
+						},
+						blockquote: {
+							color: theme('colors.gray.300'),
+							borderColor: theme('colors.yellow.400'),
+						},
+						'ol > li::before': {
+							color: theme('colors.gray.500'),
+						},
+						'ul > li::before': {
+							backgroundColor: theme('colors.gray.600'),
+						},
+						code: {
+							background: theme('colors.gray.200'),
+							color: theme('colors.gray.600'),
 						},
 					},
 				},
@@ -77,6 +114,8 @@ module.exports = {
 		extend: {
 			ringWidth: ['hover'],
 			padding: ['hover'],
+			backgroundOpacity: ['dark'],
+			typography: ['dark'],
 		},
 	},
 	plugins: [require('@tailwindcss/typography')],

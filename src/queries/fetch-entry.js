@@ -13,6 +13,8 @@ export default gql`
 				address
 			}
 			publication {
+				displayName
+				avatarURL
 				ensLabel
 				publicationSettings {
 					settings
