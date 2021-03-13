@@ -10,7 +10,7 @@
 - [x] Patience page (when no articles exist)
 - [x] Static generation (all pages should load instantly once deployed)
 - [x] Static re-generation (new articles should appear without re-deploying)
-- Embeds
+Embeds
     - [x] Tweet embeds
     - [x] YouTube embeds
     - [x] Additional embeds (CodePen, JSBin, Gists, etc., not sure if supported by Mirror already)
