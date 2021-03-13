@@ -43,7 +43,7 @@ Not really. I'm getting the data from Mirror's APIs instead of querying Arweave 
 
 **Why did you make this?**
 
-I like playing with stuff :smiley:. I really like Mirror's design, so I decided to create a [Ghost](https://ghost.org) theme "inspired" by their design. Once that was finished, I decided to turn that theme into something slightly more useful.
+I like playing with stuff :). I really like Mirror's design, so I decided to create a [Ghost](https://ghost.org) theme "inspired" by their design. Once that was finished, I decided to turn that theme into something slightly more useful.
 
 **Who are you?**
 
