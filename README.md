@@ -47,7 +47,7 @@ I like playing with stuff :). I really like Mirror's design, so I decided to cre
 
 **Who are you?**
 
-:wave: Hi! I'm [Miguel Piedrafita](https://twitter.com/m1guelpf), an 18-year-old indie maker, getting his toes deep into crypto. You can follow my journey and all the little things I make on the way [on Twitter](https://twitter.com/m1guelpf)
+:wave: Hi! I'm [Miguel Piedrafita](https://twitter.com/m1guelpf), an 18-year-old indie maker, getting his toes deep into crypto. You can follow my journey and all the little things I make on the way [on Twitter](https://twitter.com/m1guelpf).
 
 **I have another question**
 
