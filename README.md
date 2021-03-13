@@ -1,6 +1,8 @@
 # A Next.js-powered frontend for your Mirror blog
 > This project mimics the [Mirror](https://mirror.xyz) publication design and pulls data from their APIs, allowing you to self-host your Mirror blog on a custom domain.
 
+You can view a demo of this project by visiting [mirror.m1guelpf.me](https://mirror.m1guelpf.me), which hosts the [Mirror Development](https://dev.mirror.xyz) publication.
+
 ## Features
 
 - [x] Article list
