@@ -20,20 +20,24 @@ You can view a demo of this project by visiting [mirror.m1guelpf.me](https://mir
     - [ ] NFT embeds (couldn't find a page to test, but should be easy to add)
     - [ ] NFT crowdfunding
 - [x] Email list support (when enabled on Mirror)
+- Decentralization
+    - [x] Pull content from Arweave
+    - [ ] Pull publication data from Arweave
+    - [ ] Pull contributor data from Arweave
 - [ ] Get into mirror :wink:
 
 ## Development
 
 - Clone this repo in a local directory
 - Install dependencies (`yarn install` or `npm install`)
-- Update the ENS address of the Mirror blog you want to load on `app.config.js`
+- Copy the `.env.example` file to `.env.local`, and fill in your mirror subdomain and your [Etherscan API Key](https://etherscan.io/myapikey)
 - Start the server! (`yarn dev` or `npm run dev`)
 
 ## Deploying to Vercel
 
-If you've followed the development guide above, you should commit your changes and push them to a fork of this repo. If you just want to deploy, you can fork it from GitHub and edit the `app.config.js` file to point to your Mirror publication.
+You can deploy this project to Vercel (and load your own publication!) by clicking the button below:
 
-Then, [create a new Vercel project](https://vercel.com/new) and choose your newly-created repository. Select your Vercel team, and click `Deploy`.
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fm1guelpf%2Fmirror-next&env=ENS_DOMAIN,ETHERSCAN_TOKEN&envDescription=The%20Mirror%20subdomain%20the%20publication%20you%20want%20to%20load%2C%20and%20a%20free%20Etherscan%20API%20token.&project-name=mirror-next&repo-name=mirror-next)
 
 Once it's ready, you should be able to attach your custom domain from the Vercel settings page.
 
@@ -41,7 +45,7 @@ Once it's ready, you should be able to attach your custom domain from the Vercel
 
 **Is this decentralized?**
 
-Not really. I'm getting the data from Mirror's APIs instead of querying Arweave directly. If they ever decide to add some kind of authentication to their API (or contact me saying they'd rather I don't use it), I'll move to querying Arweave, and then it'll be more decentralized.
+Kind of. While I'm pulling the article listing and contents from the Arweave chain directly, the publication and contributor details come from Mirror's internal APIs.
 
 **Why did you make this?**
 

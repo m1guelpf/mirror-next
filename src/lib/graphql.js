@@ -1,8 +1,11 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 
-const client = new ApolloClient({
+export const mirrorQL = new ApolloClient({
 	uri: 'https://mirror-api.com/graphql',
 	cache: new InMemoryCache(),
 })
 
-export default client
+export const arweaveQL = new ApolloClient({
+	uri: 'https://arweave.net/graphql',
+	cache: new InMemoryCache(),
+})

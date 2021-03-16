@@ -6,17 +6,6 @@ export default gql`
 			displayName
 			avatarURL
 			ensLabel
-			entries {
-				digest
-				timestamp
-				title
-				body
-				contributor {
-					displayName
-					avatarURL
-					address
-				}
-			}
 			publicationSettings {
 				settings
 			}
