@@ -20,7 +20,7 @@ You can view a demo of this project by visiting [mirror.m1guelpf.me](https://mir
     - [ ] NFT embeds (couldn't find a page to test, but should be easy to add)
     - [ ] NFT crowdfunding
 - [x] Email list support (when enabled on Mirror)
-- Decentralization
+- [ ] Decentralization
     - [x] Pull content from Arweave
     - [ ] Pull publication data from Arweave
     - [ ] Pull contributor data from Arweave
