@@ -1,7 +1,7 @@
 # A Next.js-powered frontend for your Mirror blog
 > This project mimics the [Mirror](https://mirror.xyz) publication design and pulls data from their APIs, allowing you to self-host your Mirror blog on a custom domain.
 
-You can view a demo of this project by visiting [mirror.m1guelpf.me](https://mirror.m1guelpf.me), which hosts the [Mirror Development](https://dev.mirror.xyz) publication.
+You can view a demo of this project by visiting [mirror.m1guelpf.me](https://mirror.m1guelpf.me), which hosts the [my Mirror publication](https://miguel.mirror.xyz).
 
 ## Features
 
@@ -24,7 +24,7 @@ You can view a demo of this project by visiting [mirror.m1guelpf.me](https://mir
     - [x] Pull content from Arweave
     - [ ] Pull publication data from Arweave
     - [ ] Pull contributor data from Arweave
-- [ ] Get into mirror :wink:
+- [x] Get into mirror :wink:
 
 ## Development
 
