@@ -5,10 +5,10 @@ import { format as timeago } from 'timeago.js'
 import ReactMarkdown from 'react-markdown'
 import { getExcerpt } from '@/utils/excerpt'
 import { components } from '@/utils/markdown'
-import { getConfig } from '@/hooks/getConfig'
 import { getEntries } from '@/data/entries'
 import fetchContributor from '@/queries/mirror/fetch-contributor'
-import { resolveSubdomain } from '@/utils/ens'
+import { publicationAddress } from '@/data/ens'
+import { getConfig } from '@/hooks/getConfig'
 
 const Index = ({ entries, contributor }) => (
 	<div className="space-y-32 mb-10">
@@ -60,7 +60,7 @@ export async function getStaticProps() {
 
 	const {
 		data: { contributor },
-	} = await mirrorQL.query({ query: fetchContributor, variables: { address: await resolveSubdomain(ensDomain) } })
+	} = await mirrorQL.query({ query: fetchContributor, variables: { address: publicationAddress } })
 
 	return {
 		props: {

@@ -9,10 +9,10 @@ import unified from 'unified'
 import remarkParse from 'remark-parse'
 import remarkStringify from 'remark-stringify'
 import highlightCode from '@/utils/highlightMarkdown'
-import { getEntry, getEntryPaths } from '@/data/entries'
+import { getEntries, getEntry, getEntryPaths } from '@/data/entries'
+import { publicationAddress } from '@/data/ens'
 import { getConfig } from '@/hooks/getConfig'
 import fetchContributor from '@/queries/mirror/fetch-contributor'
-import { resolveSubdomain } from '@/utils/ens'
 
 const Article = ({ publication, entry, contributor }) => {
 	const router = useRouter()

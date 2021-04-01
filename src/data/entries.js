@@ -1,14 +1,10 @@
-import { getConfig } from '@/hooks/getConfig'
 import arweave from '@/lib/arweave'
+import { publicationAddress } from './ens'
 import { arweaveQL } from '@/lib/graphql'
 import fetchSingleTransaction from '@/queries/arweave/fetch-single-transaction'
 import fetchTransactions from '@/queries/arweave/fetch-transactions'
-import { resolveSubdomain } from '@/utils/ens'
 
 export const getEntryPaths = async () => {
-	const { ensDomain } = getConfig()
-	const publicationAddress = await resolveSubdomain(ensDomain)
-
 	const {
 		data: {
 			transactions: { edges },

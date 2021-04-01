@@ -17,7 +17,6 @@ const Image = ({ alt, src }) => {
 }
 
 const getClass = accentColor => {
-	console.log(accentColor)
 	switch (accentColor) {
 		case 'purple':
 			return '!text-fuchsia-400'
