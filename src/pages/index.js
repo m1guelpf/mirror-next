@@ -1,15 +1,14 @@
-import { mirrorQL } from '../lib/graphql'
-import fetchPublication from '../queries/mirror/fetch-publication'
-import Layout from '../components/Layout'
+import { mirrorQL } from '@/lib/graphql'
+import fetchPublication from '@/queries/mirror/fetch-publication'
 import Link from 'next/link'
 import { format as timeago } from 'timeago.js'
 import ReactMarkdown from 'react-markdown'
-import { getExcerpt } from '../utils/excerpt'
-import { components } from '../utils/markdown'
-import { getConfig } from '../hooks/getConfig'
-import { getEntries } from '../data/entries'
-import fetchContributor from '../queries/mirror/fetch-contributor'
-import { resolveSubdomain } from '../utils/ens'
+import { getExcerpt } from '@/utils/excerpt'
+import { components } from '@/utils/markdown'
+import { getConfig } from '@/hooks/getConfig'
+import { getEntries } from '@/data/entries'
+import fetchContributor from '@/queries/mirror/fetch-contributor'
+import { resolveSubdomain } from '@/utils/ens'
 
 const Index = ({ entries, contributor }) => (
 	<div className="space-y-32 mb-10">

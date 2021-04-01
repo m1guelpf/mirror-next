@@ -1,5 +1,5 @@
 import visit from 'unist-util-visit'
-import solidity from '../vendor/solidity-lang.json'
+import solidity from '@/vendor/solidity-lang.json'
 const shiki = require('shiki') // needs require
 
 const langs = [...shiki.BUNDLED_LANGUAGES, { id: 'solidity', scopeName: 'source.solidity', grammar: solidity }]

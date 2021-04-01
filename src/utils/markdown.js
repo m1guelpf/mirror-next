@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import Embed from 'react-embed'
 import Zoom from 'react-medium-image-zoom'
-import { useTheme } from '../context/theme'
-import { getConfig } from '../hooks/getConfig'
+import { useTheme } from '@/context/theme'
+import { getConfig } from '@/hooks/getConfig'
 import { shouldEmbed } from './embeds'
 
 const Image = ({ alt, src }) => {

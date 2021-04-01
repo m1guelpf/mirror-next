@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Head from 'next/head'
-import ThemeContext from '../context/theme'
+import ThemeContext from '@/context/theme'
 
 const Layout = ({ publication, children }) => {
 	publication = { ...publication, ...JSON.parse(publication?.publicationSettings?.settings || '{}') }
