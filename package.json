@@ -30,6 +30,7 @@
     "remark-stringify": "^9.0.1",
     "rss": "^1.2.2",
     "shiki": "^0.9.3",
+    "slug": "^4.0.3",
     "tailwindcss": "^2.0.3",
     "timeago.js": "^4.0.2",
     "unified": "^9.2.1",

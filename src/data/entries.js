@@ -1,3 +1,4 @@
+import slug from 'slug'
 import arweave from '@/lib/arweave'
 import { publicationAddress } from './ens'
 import { arweaveQL } from '@/lib/graphql'
@@ -49,6 +50,7 @@ export const getEntry = async digest => {
 
 const formatEntry = (entry, transactionId) => ({
 	title: entry.content.title,
+	slug: slug(entry.content.title),
 	body: entry.content.body,
 	timestamp: entry.content.timestamp,
 	digest: entry.originalDigest,
