@@ -12,7 +12,7 @@ const Layout = ({ publication, children }) => {
 			</Head>
 			<ThemeContext.Provider value={{ theme: publication?.darkMode ? 'dark' : 'light' }}>
 				<div className={publication?.darkMode ? 'dark' : ''}>
-					<div className="dark:bg-gray-900">
+					<div className="dark:bg-gray-900 min-h-screen">
 						<header className="p-4">
 							<Link href="/">
 								<a className="flex items-center space-x-4">

@@ -45,7 +45,7 @@ const Index = ({ publication, entries, contributor }) => (
 			))}
 			{entries.length === 0 && (
 				<div className="absolute inset-0 flex items-center justify-center h-full">
-					<p className="text-gray-400 font-medium">Patience</p>
+					<p className="text-gray-400 dark:text-gray-600 font-medium">Patience</p>
 				</div>
 			)}
 		</div>
