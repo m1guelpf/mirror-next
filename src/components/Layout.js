@@ -9,6 +9,7 @@ const Layout = ({ publication, children }) => {
 		<>
 			<Head>
 				<title>{publication.displayName} - Mirror</title>
+				<link rel="alternate" type="application/rss+xml" title={`${publication.displayName} - Mirror`} href="/feed.xml" />
 			</Head>
 			<ThemeContext.Provider value={{ theme: publication?.darkMode ? 'dark' : 'light', accentColor: publication.accentColor }}>
 				<div className={publication?.darkMode ? 'dark' : ''}>
