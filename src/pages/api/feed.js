@@ -8,7 +8,9 @@ import remarkParse from 'remark-parse'
 import remark2rehype from 'remark-rehype'
 //import highlightCode from '@/utils/highlightMarkdown'
 
-export default async (_, res) => {
+export default async ({ headers: { host } }, res) => {
+	res.setHeader('Cache-Control', 's-maxage=86400')
+
 	let [publication, contributor, entries] = await Promise.all([getPublication(), getContributor(), getEntries()])
 	publication = { ...publication, ...JSON.parse(publication?.publicationSettings?.settings || '{}') }
 
@@ -19,9 +21,9 @@ export default async (_, res) => {
 		managingEditor: contributor.name,
 		webMaster: 'MirrorXYZ',
 		ttl: 1 * 60, // cache for an hour
-		site_url: 'https://m1guelpf.blog/',
+		site_url: `https://${host}/`,
 		generator: 'RSS for Mirror, by Miguel Piedrafita',
-		feed_url: 'https://m1guelpf.blog/feed.xml',
+		feed_url: `https://${host}/feed.xml`,
 	})
 
 	const markdownRenderer = unified()
@@ -37,7 +39,7 @@ export default async (_, res) => {
 			feed.item({
 				title: entry.title,
 				guid: entry.digest,
-				url: `https://m1guelpf.blog/${entry.digest}`,
+				url: `https://${host}/${entry.digest}`,
 				date: new Date(entry.timestamp * 1000).toISOString(),
 				description: body,
 			})
