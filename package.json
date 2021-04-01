@@ -1,5 +1,5 @@
 {
-  "name": "mirror-clone",
+  "name": "mirror-next",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.11",
-    "@tailwindcss/jit": "^0.1.1",
+    "@tailwindcss/jit": "^0.1.18",
     "@tailwindcss/typography": "^0.4.0",
     "arweave": "^1.10.13",
     "autoprefixer": "^10.2.5",

@@ -18,7 +18,7 @@ module.exports = {
 	},
 	plugins: ['react', 'react-hooks', 'prettier'],
 	rules: {
-		indent: ['error', 'tab'],
+		indent: 'off',
 		'linebreak-style': ['error', 'unix'],
 		quotes: ['error', 'single', { avoidEscape: true }],
 		semi: ['error', 'never'],

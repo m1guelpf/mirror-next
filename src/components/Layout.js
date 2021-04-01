@@ -10,7 +10,7 @@ const Layout = ({ publication, children }) => {
 			<Head>
 				<title>{publication.displayName} - Mirror</title>
 			</Head>
-			<ThemeContext.Provider value={{ theme: publication?.darkMode ? 'dark' : 'light' }}>
+			<ThemeContext.Provider value={{ theme: publication?.darkMode ? 'dark' : 'light', accentColor: publication.accentColor }}>
 				<div className={publication?.darkMode ? 'dark' : ''}>
 					<div className="dark:bg-gray-900 min-h-screen">
 						<header className="p-4">
