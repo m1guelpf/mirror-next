@@ -104,23 +104,27 @@ export async function getStaticProps({ params: { digest } }) {
 
 	const {
 		data: { contributor },
-	} = await mirrorQL.query({ query: fetchContributor, variables: { address: await resolveSubdomain(ensDomain) } })
+	} = await mirrorQL.query({ query: fetchContributor, variables: { address: publicationAddress } })
 
-	const entry = await getEntry(digest)
+	try {
+		const entry = await getEntry(digest)
 
-	const body = await unified()
-		.use(remarkParse) // Parse markdown
-		.use(highlightCode, { theme: darkMode ? 'dark' : 'light' }) // Highlight code
-		.use(remarkStringify) // Serialize markdown
-		.process(entry.body)
+		const body = await unified()
+			.use(remarkParse) // Parse markdown
+			.use(highlightCode, { theme: darkMode ? 'dark' : 'light' }) // Highlight code
+			.use(remarkStringify) // Serialize markdown
+			.process(entry.body)
 
-	return {
-		props: {
-			publication,
-			contributor,
-			entry: { ...entry, body: String(body) },
-		},
-		revalidate: 1 * 60 * 60, // refresh article contents every hour
+		return {
+			props: {
+				publication,
+				contributor,
+				entry: { ...entry, body: String(body) },
+			},
+			revalidate: 1 * 60 * 60, // refresh article contents every hour
+		}
+	} catch {
+		return { props: { publication }, notFound: true }
 	}
 }
 
