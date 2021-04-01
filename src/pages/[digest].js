@@ -8,11 +8,13 @@ import { formatAddress } from '@/utils/address'
 import unified from 'unified'
 import remarkParse from 'remark-parse'
 import remarkStringify from 'remark-stringify'
+import { getContributor } from '../data/contributor'
 import highlightCode from '@/utils/highlightMarkdown'
 import { getEntries, getEntry, getEntryPaths } from '@/data/entries'
 import { publicationAddress } from '@/data/ens'
 import { getConfig } from '@/hooks/getConfig'
 import fetchContributor from '@/queries/mirror/fetch-contributor'
+import { getPublication } from '@/data/publication'
 
 const Article = ({ publication, entry, contributor }) => {
 	const router = useRouter()
@@ -94,20 +96,9 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { digest } }) {
-	const { ensDomain } = getConfig()
-
-	const {
-		data: { publication },
-	} = await mirrorQL.query({ query: fetchPublication, variables: { publication: ensDomain } })
-
-	const darkMode = JSON.parse(publication?.publicationSettings?.settings || '{ "darkMode": false }').darkMode
-
-	const {
-		data: { contributor },
-	} = await mirrorQL.query({ query: fetchContributor, variables: { address: publicationAddress } })
-
 	try {
-		const entry = await getEntry(digest)
+		const [publication, contributor, entry] = await Promise.all([getPublication(), getContributor(), getEntry(digest)])
+		const darkMode = JSON.parse(publication?.publicationSettings?.settings || '{ "darkMode": false }').darkMode
 
 		const body = await unified()
 			.use(remarkParse) // Parse markdown
@@ -124,7 +115,7 @@ export async function getStaticProps({ params: { digest } }) {
 			revalidate: 1 * 60 * 60, // refresh article contents every hour
 		}
 	} catch {
-		return { props: { publication }, notFound: true }
+		return { notFound: true }
 	}
 }
 

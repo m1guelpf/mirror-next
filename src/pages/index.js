@@ -3,12 +3,14 @@ import fetchPublication from '@/queries/mirror/fetch-publication'
 import Link from 'next/link'
 import { format as timeago } from 'timeago.js'
 import ReactMarkdown from 'react-markdown'
+import { getContributor } from '../data/contributor'
 import { getExcerpt } from '@/utils/excerpt'
 import { components } from '@/utils/markdown'
 import { getEntries } from '@/data/entries'
 import fetchContributor from '@/queries/mirror/fetch-contributor'
 import { publicationAddress } from '@/data/ens'
 import { getConfig } from '@/hooks/getConfig'
+import { getPublication } from '@/data/publication'
 
 const Index = ({ entries, contributor }) => (
 	<div className="space-y-32 mb-10">
@@ -52,21 +54,13 @@ const Index = ({ entries, contributor }) => (
 )
 
 export async function getStaticProps() {
-	const { ensDomain } = getConfig()
-
-	const {
-		data: { publication },
-	} = await mirrorQL.query({ query: fetchPublication, variables: { publication: ensDomain } })
-
-	const {
-		data: { contributor },
-	} = await mirrorQL.query({ query: fetchContributor, variables: { address: publicationAddress } })
+	const [publication, contributor, entries] = await Promise.all([getPublication(), getContributor(), getEntries()])
 
 	return {
 		props: {
 			publication,
-			entries: await getEntries(),
 			contributor,
+			entries,
 		},
 		revalidate: 5 * 60, // refresh page index every 5 minutes
 	}
