@@ -19,9 +19,9 @@ export default async (_, res) => {
 		managingEditor: contributor.name,
 		webMaster: 'MirrorXYZ',
 		ttl: 1 * 60, // cache for an hour
-		site_url: 'https://mirror.m1guelpf.me/',
+		site_url: 'https://m1guelpf.blog/',
 		generator: 'RSS for Mirror, by Miguel Piedrafita',
-		feed_url: 'https://mirror.m1guelpf.me/feed.xml',
+		feed_url: 'https://m1guelpf.blog/feed.xml',
 	})
 
 	const markdownRenderer = unified()
@@ -37,7 +37,7 @@ export default async (_, res) => {
 			feed.item({
 				title: entry.title,
 				guid: entry.digest,
-				url: `https://mirror.m1guelpf.me/${entry.digest}`,
+				url: `https://m1guelpf.blog/${entry.digest}`,
 				date: new Date(entry.timestamp * 1000).toISOString(),
 				description: body,
 			})

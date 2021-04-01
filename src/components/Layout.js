@@ -8,8 +8,18 @@ const Layout = ({ publication, children }) => {
 	return (
 		<>
 			<Head>
-				<title>{publication.displayName} - Mirror</title>
-				<link rel="alternate" type="application/rss+xml" title={`${publication.displayName} - Mirror`} href="/feed.xml" />
+				<title>{publication.displayName} — Mirror</title>
+				<meta name="og:title" content={`${publication.displayName} — Mirror`} />
+				{publication.description && (
+					<>
+						<meta name="description" content={publication.description} />
+						<meta name="og:description" content={publication.description} />
+					</>
+				)}
+				<meta name="twitter:card" content="summary" />
+				<meta name="og:image" content={publication.avatarURL} />
+				<meta name="twitter:image" content={publication.avatarURL} />
+				<link rel="alternate" type="application/rss+xml" title={`${publication.displayName} — Mirror`} href="/feed.xml" />
 			</Head>
 			<ThemeContext.Provider value={{ theme: publication?.darkMode ? 'dark' : 'light', accentColor: publication.accentColor }}>
 				<div className={publication?.darkMode ? 'dark' : ''}>
