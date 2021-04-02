@@ -7,7 +7,7 @@ module.exports = () => {
 
 	const provider = new ethers.providers.InfuraProvider(null, process.env.INFURA_ID)
 
-	provider.resolveName(`${process.env.ENS_DOMAIN}.mirror.xyz`).then(publicationAddress => {
-		fs.writeFileSync('./src/data/ens.js', `export const publicationAddress = '${publicationAddress}'`)
+	provider.resolveName(`${process.env.MIRROR_SUBDOMAIN}.mirror.xyz`).then(publicationAddress => {
+		fs.writeFileSync('./src/data/ens.js', `export const publicationAddress = '${publicationAddress}'\n`)
 	})
 }

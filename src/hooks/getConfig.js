@@ -1,3 +1,3 @@
 export const getConfig = () => {
-	return { ensDomain: process.env.ENS_DOMAIN }
+	return { ensDomain: process.env.MIRROR_SUBDOMAIN }
 }
