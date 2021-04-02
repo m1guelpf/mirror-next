@@ -3,11 +3,31 @@ import { useRouter } from 'next/router'
 import '@/styles/style.css'
 import { useEffect } from 'react'
 import Layout from '@/components/Layout'
+import * as Fathom from 'fathom-client'
 
 function MyApp({ Component, pageProps }) {
 	const router = useRouter()
 
 	NProgress.configure({ showSpinner: false })
+
+	useEffect(() => {
+		// eslint-disable-next-line no-undef
+		if (!process.env.FATHOM_ID) return
+
+		// eslint-disable-next-line no-undef
+		Fathom.load(process.env.FATHOM_ID, {
+			includedDomains: ['m1guelpf.blog'],
+			url: 'https://hyena.m1guelpf.blog/script.js',
+		})
+
+		// Record a pageview when route changes
+		router.events.on('routeChangeComplete', () => Fathom.trackPageview())
+
+		// Unassign event listener
+		return () => {
+			router.events.off('routeChangeComplete', () => Fathom.trackPageview())
+		}
+	}, [])
 
 	useEffect(() => {
 		router.events.on('routeChangeStart', () => NProgress.start())
