@@ -5,6 +5,8 @@ import ThemeContext from '@/context/theme'
 const Layout = ({ publication, children }) => {
 	publication = { ...publication, ...JSON.parse(publication?.publicationSettings?.settings || '{}') }
 
+	if (publication?.darkMode && typeof document !== 'undefined') document.body.classList.add('dark')
+
 	return (
 		<>
 			<Head>
