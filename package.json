@@ -19,6 +19,7 @@
     "next": "10.1.2",
     "nprogress": "^0.2.0",
     "postcss": "^8.2.8",
+    "preact": "^10.5.13",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-embed": "^3.3.2",
