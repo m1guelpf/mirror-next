@@ -27,6 +27,7 @@ function MyApp({ Component, pageProps }) {
 		return () => {
 			router.events.off('routeChangeComplete', () => Fathom.trackPageview())
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	useEffect(() => {
