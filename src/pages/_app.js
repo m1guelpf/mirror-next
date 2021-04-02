@@ -11,11 +11,7 @@ function MyApp({ Component, pageProps }) {
 	NProgress.configure({ showSpinner: false })
 
 	useEffect(() => {
-		// eslint-disable-next-line no-undef
-		if (!process.env.FATHOM_ID) return
-
-		// eslint-disable-next-line no-undef
-		Fathom.load(process.env.FATHOM_ID, {
+		Fathom.load('STJUQNYD', {
 			includedDomains: ['m1guelpf.blog'],
 			url: 'https://hyena.m1guelpf.blog/script.js',
 		})
