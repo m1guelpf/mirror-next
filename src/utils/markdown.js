@@ -4,6 +4,7 @@ import Zoom from 'react-medium-image-zoom'
 import { useTheme } from '@/context/theme'
 import { getConfig } from '@/hooks/getConfig'
 import { shouldEmbed } from './embeds'
+import NextImage from '@/vendor/image'
 
 const Image = ({ alt, src }) => {
 	const { theme } = useTheme()
@@ -11,7 +12,7 @@ const Image = ({ alt, src }) => {
 	return (
 		<figure>
 			<Zoom wrapElement="span" wrapStyle={{ width: '100%' }} overlayBgColorStart={theme == 'dark' ? 'rgba(0, 0, 0, 0)' : 'rgba(255, 255, 255, 0)'} overlayBgColorEnd={theme == 'dark' ? 'rgba(0, 0, 0, 0.95)' : 'rgba(255, 255, 255, 0.95)'}>
-				<img src={src} />
+				<NextImage unsized src={src} />
 			</Zoom>
 			{alt && <figcaption>{alt}</figcaption>}
 		</figure>
