@@ -30,6 +30,7 @@ module.exports = {
 						img: {
 							marginTop: null,
 							marginBottom: null,
+							borderRadius: theme('borderRadius.lg'),
 						},
 						blockquote: {
 							borderLeftWidth: '2px',
@@ -60,9 +61,6 @@ module.exports = {
 						'.twitter-tweet': {
 							marginLeft: 'auto',
 							marginRight: 'auto',
-						},
-						'pre > code': {
-							fontSize: theme('fontSize.xs')[0],
 						},
 						code: {
 							fontWeight: theme('fontWeight.normal'),
