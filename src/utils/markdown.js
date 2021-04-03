@@ -56,8 +56,8 @@ const LinkOrEmbed = ({ href, children }) => {
 
 	if (href.startsWith(`${ensDomain}.mirror.xyz`) || href.startsWith('/') || (typeof window !== 'undefined' && href.startsWith(window.location.origin))) {
 		return (
-			<Link href={href} className={getClass(accentColor)}>
-				<a>{children}</a>
+			<Link href={href}>
+				<a className={getClass(accentColor)}>{children}</a>
 			</Link>
 		)
 	}
