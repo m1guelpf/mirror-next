@@ -56,4 +56,5 @@ const formatEntry = (entry, transactionId) => ({
 	digest: entry.originalDigest,
 	contributor: entry.authorship.contributor,
 	transaction: transactionId,
+	cover_image: (entry.content.body.split('\n\n')[0].match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || [])?.[1] || null,
 })

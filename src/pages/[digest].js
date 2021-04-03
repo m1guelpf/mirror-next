@@ -20,9 +20,6 @@ const Article = ({ publication, entry, contributor }) => {
 
 	const { mailingListURL } = JSON.parse(publication?.publicationSettings?.settings || '{ "mailingListURL": null }')
 
-	// If entry starts with an image, use that image for social cards
-	const [, imageUrl] = entry.body.split('\n\n')[0].match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || []
-
 	// If there's an image we want to use the second paragraph as the description instead of the first one.
 	// We'll also strip the markdown from the description (to avoid things like links showing up) and trim the newline at the end
 	const metaDescription = String(
@@ -30,7 +27,7 @@ const Article = ({ publication, entry, contributor }) => {
 			.use(remarkParse)
 			.use(strip)
 			.use(remarkStringify)
-			.processSync(entry.body.split('\n\n')[imageUrl ? 1 : 0])
+			.processSync(entry.body.split('\n\n')[entry.cover_image ? 1 : 0])
 	).slice(0, -1)
 
 	return (
@@ -42,11 +39,11 @@ const Article = ({ publication, entry, contributor }) => {
 				<meta name="og:description" content={metaDescription} />
 				<meta name="twitter:title" content={`${entry.title} — Mirror`} />
 				<meta name="twitter:description" content={metaDescription} />
-				{imageUrl && (
+				{entry.cover_image && (
 					<>
 						<meta name="twitter:card" content="summary_large_image" />
-						<meta name="og:image" content={imageUrl} />
-						<meta name="twitter:image" content={imageUrl} />
+						<meta name="og:image" content={entry.cover_image} />
+						<meta name="twitter:image" content={entry.cover_image} />
 					</>
 				)}
 			</Head>
