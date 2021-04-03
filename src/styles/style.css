@@ -7,6 +7,10 @@
 @tailwind components;
 @tailwind utilities;
 
+button[aria-label="Zoom image"], button[aria-label="Unzoom image"] {
+    @apply outline-none focus-visible:ring;
+}
+
 #nprogress .bar {
     background: #000000 !important;
 }
