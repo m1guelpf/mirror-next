@@ -11,6 +11,7 @@ import highlightCode from '@/utils/highlightMarkdown'
 import { getEntry, getEntryPaths } from '@/data/entries'
 import { getPublication } from '@/data/publication'
 import Head from 'next/head'
+import strip from 'strip-markdown'
 
 const Article = ({ publication, entry, contributor }) => {
 	const router = useRouter()
@@ -19,15 +20,34 @@ const Article = ({ publication, entry, contributor }) => {
 
 	const { mailingListURL } = JSON.parse(publication?.publicationSettings?.settings || '{ "mailingListURL": null }')
 
+	// If entry starts with an image, use that image for social cards
+	const [, imageUrl] = entry.body.split('\n\n')[0].match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || []
+
+	// If there's an image we want to use the second paragraph as the description instead of the first one.
+	// We'll also strip the markdown from the description (to avoid things like links showing up) and trim the newline at the end
+	const metaDescription = String(
+		unified()
+			.use(remarkParse)
+			.use(strip)
+			.use(remarkStringify)
+			.processSync(entry.body.split('\n\n')[imageUrl ? 1 : 0])
+	).slice(0, -1)
+
 	return (
 		<>
 			<Head>
 				<title>{entry.title} — Mirror</title>
-				<meta name="description" content={entry.body.split('\n\n')[0]} />
+				<meta name="description" content={metaDescription} />
 				<meta name="og:title" content={`${entry.title} — Mirror`} />
-				<meta name="og:description" content={entry.body.split('\n\n')[0]} />
+				<meta name="og:description" content={metaDescription} />
 				<meta name="twitter:title" content={`${entry.title} — Mirror`} />
-				<meta name="twitter:description" content={entry.body.split('\n\n')[0]} />
+				<meta name="twitter:description" content={metaDescription} />
+				{imageUrl && (
+					<>
+						<meta name="og:image" content={imageUrl} />
+						<meta name="twitter:image" content={imageUrl} />
+					</>
+				)}
 			</Head>
 			<article>
 				<header>
