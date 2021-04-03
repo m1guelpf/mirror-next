@@ -44,6 +44,7 @@ const Article = ({ publication, entry, contributor }) => {
 				<meta name="twitter:description" content={metaDescription} />
 				{imageUrl && (
 					<>
+						<meta name="twitter:card" content="summary_large_image" />
 						<meta name="og:image" content={imageUrl} />
 						<meta name="twitter:image" content={imageUrl} />
 					</>
