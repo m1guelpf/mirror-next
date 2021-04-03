@@ -6,9 +6,11 @@ import { getConfig } from '@/hooks/getConfig'
 import { shouldEmbed } from './embeds'
 
 const Image = ({ alt, src }) => {
+	const { theme } = useTheme()
+
 	return (
 		<figure>
-			<Zoom wrapElement="span" wrapStyle={{ width: '100%' }}>
+			<Zoom wrapElement="span" wrapStyle={{ width: '100%' }} overlayBgColorStart={theme == 'dark' ? 'rgba(0, 0, 0, 0)' : 'rgba(255, 255, 255, 0)'} overlayBgColorEnd={theme == 'dark' ? 'rgba(0, 0, 0, 0.95)' : 'rgba(255, 255, 255, 0.95)'}>
 				<img src={src} />
 			</Zoom>
 			{alt && <figcaption>{alt}</figcaption>}
