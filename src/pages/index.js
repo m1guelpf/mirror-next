@@ -1,16 +1,12 @@
-import { mirrorQL } from '@/lib/graphql'
-import fetchPublication from '@/queries/mirror/fetch-publication'
 import Link from 'next/link'
-import { format as timeago } from 'timeago.js'
 import ReactMarkdown from 'react-markdown'
-import { getContributor } from '../data/contributor'
+import { getEntries } from '@/data/entries'
 import { getExcerpt } from '@/utils/excerpt'
 import { components } from '@/utils/markdown'
-import { getEntries } from '@/data/entries'
-import fetchContributor from '@/queries/mirror/fetch-contributor'
-import { publicationAddress } from '@/data/ens'
-import { getConfig } from '@/hooks/getConfig'
+import { format as timeago } from 'timeago.js'
+import LinkButton from '@/components/LinkButton'
 import { getPublication } from '@/data/publication'
+import { getContributor } from '@/data/contributor'
 
 const Index = ({ entries, contributor }) => (
 	<div className="space-y-32 mb-10">
@@ -38,11 +34,7 @@ const Index = ({ entries, contributor }) => (
 						{getExcerpt(entry.body)}
 					</ReactMarkdown>
 				</div>
-				{entry.body.split('\n\n').length > 4 && (
-					<Link href={`/${entry.digest}`}>
-						<a className="bg-blue-100 dark:bg-yellow-400 dark:bg-opacity-20 font-medium text-blue-500 dark:text-yellow-300 rounded-lg p-4 hover:ring-4 ring-blue-50 dark:ring-yellow-400 dark:ring-opacity-20 transition duration-300 text-base shadow-xs hover:shadow-xs sm:text-lg sm:px-10">Continue Reading</a>
-					</Link>
-				)}
+				{entry.body.split('\n\n').length > 4 && <LinkButton href={`/${entry.digest}`}>Continue Reading</LinkButton>}
 			</article>
 		))}
 		{entries.length === 0 && (
