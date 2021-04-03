@@ -16,6 +16,7 @@ module.exports = {
 	},
 	rewrites: async () => [
 		{ source: '/feed.xml', destination: '/api/feed' },
+		{ source: '/posts.json', destination: '/api/posts' },
 		{ source: '/post/:slug', destination: '/api/post' },
 	],
 }
