@@ -56,7 +56,7 @@ I like playing with stuff :). I really like Mirror's design, so I decided to cre
 
 **I have another question**
 
-I'll be writing an article about this project in [my brand new Mirror publication](https://miguel.mirror.xyz) soon!
+Read [Building apps with Mirror](https://m1guelpf.blog/post/building-apps-with-mirror), an entry I wrote in my own Mirror publication explaining how this project works, and how you can build your own Mirror apps. If you still have questions after that, [drop me a line on Twitter](https://twitter.com/m1guelpf).
 
 ## License
 
