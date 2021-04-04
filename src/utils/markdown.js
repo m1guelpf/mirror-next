@@ -6,6 +6,7 @@ import { getConfig } from '@/hooks/getConfig'
 import { shouldEmbed } from './embeds'
 import NextImage from 'next/image'
 import { useImageSizes } from '@/context/image_sizes'
+import { NFTE } from '@nfte/react'
 
 const Image = ({ alt, src }) => {
 	const { theme } = useTheme()
@@ -55,6 +56,12 @@ const LinkOrEmbed = ({ href, children, node: { blockSize } }) => {
 	const { ensDomain } = getConfig()
 	const { theme, accentColor } = useTheme()
 
+	if (new URL(href).protocol === 'ethereum:' && blockSize == 1) {
+		const [contract, tokenId] = new URL(href).pathname.substring(2).split('/')
+
+		return <NFTE contract={contract} tokenId={tokenId} darkMode={theme === 'dark'} className="mx-auto" style={{ '--nfte-colors-bg': 'black' }} />
+	}
+
 	if (typeof window !== 'undefined' && blockSize == 1 && shouldEmbed(href)) {
 		return <Embed url={href} isDark={theme === 'dark'} />
 	}
@@ -77,9 +84,7 @@ const LinkOrEmbed = ({ href, children, node: { blockSize } }) => {
 
 const Block = ({ children }) => {
 	const blockAwareChildren = children.map(child => {
-		if (child.props.node) {
-			child.props.node.blockSize = children.length
-		}
+		if (child.props.node) child.props.node.blockSize = children.length
 
 		return child
 	})
