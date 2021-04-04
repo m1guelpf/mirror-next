@@ -1,7 +1,7 @@
 import { format as timeago } from 'timeago.js'
 import { useRouter } from 'next/router'
 import ReactMarkdown from 'react-markdown'
-import { components } from '@/utils/markdown'
+import { components, uriTransformer } from '@/utils/markdown'
 import { formatAddress } from '@/utils/address'
 import unified from 'unified'
 import remarkParse from 'remark-parse'
@@ -69,7 +69,7 @@ const Article = ({ publication, entry, contributor }) => {
 
 				<div className="prose lg:prose-lg dark:prose-dark pb-36">
 					<ImageSizesContext.Provider value={entry.image_sizes}>
-						<ReactMarkdown renderers={components} allowDangerousHtml={true}>
+						<ReactMarkdown renderers={components} transformLinkUri={uriTransformer} allowDangerousHtml={true}>
 							{entry.body}
 						</ReactMarkdown>
 					</ImageSizesContext.Provider>
@@ -139,8 +139,7 @@ export async function getStaticProps({ params: { digest } }) {
 			},
 			revalidate: 1 * 60 * 60, // refresh article contents every hour
 		}
-	} catch (e) {
-		console.log(e)
+	} catch {
 		return { notFound: true }
 	}
 }
