@@ -38,6 +38,11 @@ module.exports = {
 							fontWeight: theme('fontWeight.normal'),
 							borderColor: theme('colors.blue.600'),
 						},
+						hr: {
+							maxWidth: '12rem',
+							marginLeft: 'auto',
+							marginRight: 'auto',
+						},
 						'blockquote p:first-of-type::before, blockquote p:last-of-type::after': {
 							content: 'unset !important',
 						},
@@ -72,6 +77,9 @@ module.exports = {
 								content: 'unset !important',
 							},
 						},
+						'.nfte *': {
+							margin: '0',
+						},
 					},
 				},
 				dark: {
@@ -82,9 +90,6 @@ module.exports = {
 						},
 						'h1, h2, h3, h4, h5, h6': {
 							color: theme('colors.gray.200'),
-						},
-						a: {
-							color: theme('colors.yellow.400'),
 						},
 						blockquote: {
 							color: theme('colors.gray.300'),
@@ -99,6 +104,9 @@ module.exports = {
 						code: {
 							background: 'unset',
 							color: 'unset',
+						},
+						hr: {
+							borderColor: theme('colors.gray.800'),
 						},
 					},
 				},
