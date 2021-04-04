@@ -4,6 +4,7 @@ import { publicationAddress } from './ens'
 import { arweaveQL } from '@/lib/graphql'
 import fetchSingleTransaction from '@/queries/arweave/fetch-single-transaction'
 import fetchTransactions from '@/queries/arweave/fetch-transactions'
+import { calculateSizes } from '@/utils/images'
 
 export const getEntryPaths = async () => {
 	const {
@@ -48,7 +49,7 @@ export const getEntry = async digest => {
 	return formatEntry(JSON.parse(await arweave.transactions.getData(transactionId, { decode: true, string: true })), transactionId)
 }
 
-const formatEntry = (entry, transactionId) => ({
+const formatEntry = async (entry, transactionId) => ({
 	title: entry.content.title,
 	slug: slug(entry.content.title),
 	body: entry.content.body,
@@ -57,4 +58,5 @@ const formatEntry = (entry, transactionId) => ({
 	contributor: entry.authorship.contributor,
 	transaction: transactionId,
 	cover_image: (entry.content.body.split('\n\n')[0].match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || [])?.[1] || null,
+	image_sizes: await calculateSizes(entry.content.body),
 })

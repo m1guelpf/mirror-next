@@ -12,6 +12,7 @@ import { getEntry, getEntryPaths } from '@/data/entries'
 import { getPublication } from '@/data/publication'
 import Head from 'next/head'
 import strip from 'strip-markdown'
+import ImageSizesContext from '@/context/image_sizes'
 
 const Article = ({ publication, entry, contributor }) => {
 	const router = useRouter()
@@ -67,9 +68,11 @@ const Article = ({ publication, entry, contributor }) => {
 				</header>
 
 				<div className="prose lg:prose-lg dark:prose-dark pb-36">
-					<ReactMarkdown renderers={components} allowDangerousHtml={true}>
-						{entry.body}
-					</ReactMarkdown>
+					<ImageSizesContext.Provider value={entry.image_sizes}>
+						<ReactMarkdown renderers={components} allowDangerousHtml={true}>
+							{entry.body}
+						</ReactMarkdown>
+					</ImageSizesContext.Provider>
 				</div>
 
 				{mailingListURL && (
@@ -136,7 +139,8 @@ export async function getStaticProps({ params: { digest } }) {
 			},
 			revalidate: 1 * 60 * 60, // refresh article contents every hour
 		}
-	} catch {
+	} catch (e) {
+		console.log(e)
 		return { notFound: true }
 	}
 }

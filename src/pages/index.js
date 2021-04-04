@@ -7,6 +7,7 @@ import { format as timeago } from 'timeago.js'
 import LinkButton from '@/components/LinkButton'
 import { getPublication } from '@/data/publication'
 import { getContributor } from '@/data/contributor'
+import ImageSizesContext from '@/context/image_sizes'
 
 const Index = ({ entries, contributor }) => (
 	<div className="space-y-32 mb-10">
@@ -30,9 +31,11 @@ const Index = ({ entries, contributor }) => (
 					</div>
 				</div>
 				<div className="prose lg:prose-lg dark:prose-dark mb-8">
-					<ReactMarkdown renderers={components} allowDangerousHtml={true}>
-						{getExcerpt(entry.body)}
-					</ReactMarkdown>
+					<ImageSizesContext.Provider value={entry.image_sizes}>
+						<ReactMarkdown renderers={components} allowDangerousHtml={true}>
+							{getExcerpt(entry.body)}
+						</ReactMarkdown>
+					</ImageSizesContext.Provider>
 				</div>
 				{entry.body.split('\n\n').length > 4 && <LinkButton href={`/${entry.digest}`}>Continue Reading</LinkButton>}
 			</article>
