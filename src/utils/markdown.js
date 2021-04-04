@@ -59,7 +59,7 @@ const LinkOrEmbed = ({ href, children, node: { blockSize } }) => {
 	if (new URL(href).protocol === 'ethereum:' && blockSize == 1) {
 		const [contract, tokenId] = new URL(href).pathname.substring(2).split('/')
 
-		return <NFTE contract={contract} tokenId={tokenId} darkMode={theme === 'dark'} className="mx-auto" style={{ '--nfte-colors-bg': 'black' }} />
+		return <NFTE contract={contract} tokenId={tokenId} darkMode={theme === 'dark'} className="mx-auto" style={{ '--nfte-colors-bg': 'black' }} apiUrl="/api/nft-data" />
 	}
 
 	if (typeof window !== 'undefined' && blockSize == 1 && shouldEmbed(href)) {

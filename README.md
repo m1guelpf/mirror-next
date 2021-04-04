@@ -17,8 +17,8 @@ You can view a demo of this project by visiting [m1guelpf.blog](https://m1guelpf
     -   [x] Tweet embeds
     -   [x] YouTube embeds
     -   [x] Additional embeds (CodePen, JSBin, Gists, etc., not sure if supported by Mirror already)
+    -   [x] NFT embeds
     -   [ ] OpenGraph embeds
-    -   [ ] NFT embeds (couldn't find a page to test, but should be easy to add)
     -   [ ] NFT crowdfunding
     -   [ ] NFT auctions
 -   [x] Email list support (when enabled on Mirror)

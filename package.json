@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.11",
+    "@nfte/handler": "^1.0.3",
     "@nfte/react": "^1.0.3",
     "@tailwindcss/jit": "^0.1.18",
     "@tailwindcss/typography": "^0.4.0",
@@ -49,6 +50,7 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "is-ipfs": "^4.0.0",
     "prettier": "^2.2.1"
   }
 }
