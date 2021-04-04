@@ -51,11 +51,11 @@ const getClass = accentColor => {
 	}
 }
 
-const LinkOrEmbed = ({ href, children }) => {
+const LinkOrEmbed = ({ href, children, node: { blockSize } }) => {
 	const { ensDomain } = getConfig()
 	const { theme, accentColor } = useTheme()
 
-	if (typeof window !== 'undefined' && children.length == 0 && shouldEmbed(href)) {
+	if (typeof window !== 'undefined' && blockSize == 1 && shouldEmbed(href)) {
 		return <Embed url={href} isDark={theme === 'dark'} />
 	}
 
@@ -75,7 +75,20 @@ const LinkOrEmbed = ({ href, children }) => {
 	)
 }
 
+const Block = ({ children }) => {
+	const blockAwareChildren = children.map(child => {
+		if (child.props.node) {
+			child.props.node.blockSize = children.length
+		}
+
+		return child
+	})
+
+	return <p>{blockAwareChildren}</p>
+}
+
 export const components = {
 	image: Image,
 	link: LinkOrEmbed,
+	paragraph: Block,
 }
