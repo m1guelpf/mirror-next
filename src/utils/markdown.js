@@ -7,6 +7,8 @@ import { shouldEmbed } from './embeds'
 import NextImage from 'next/image'
 import { useImageSizes } from '@/context/image_sizes'
 import { NFTE } from '@nfte/react'
+import OpenGraph from '@/components/OpenGraph'
+import EntryLink from '@/components/EntryLink'
 
 const Image = ({ alt, src }) => {
 	const { theme } = useTheme()
@@ -24,62 +26,22 @@ const Image = ({ alt, src }) => {
 	)
 }
 
-const getClass = accentColor => {
-	switch (accentColor) {
-		case 'purple':
-			return '!text-fuchsia-400'
-		case 'pink':
-			return '!text-red-500'
-		case 'red':
-			return '!text-red-500'
-		case 'orange':
-			return '!text-orange-400'
-		case 'yellow':
-			return '!text-yellow-400'
-		case 'teal':
-			return '!text-cyan-400'
-		case 'blue':
-			return '!text-blue-500'
-		case 'indigo':
-			return '!text-indigo-400'
-		case 'green':
-			return '!text-emerald-400'
-		case 'foreground':
-			return '!text-white'
-
-		default:
-			return '!text-blue-400'
-	}
-}
-
 const LinkOrEmbed = ({ href, children, node: { blockSize } }) => {
-	const { ensDomain } = getConfig()
-	const { theme, accentColor } = useTheme()
+	const { theme } = useTheme()
 
-	if (new URL(href).protocol === 'ethereum:' && blockSize == 1) {
+	if (blockSize != 1) return <EntryLink href={href}>{children}</EntryLink>
+
+	if (new URL(href).protocol === 'ethereum:') {
 		const [contract, tokenId] = new URL(href).pathname.substring(2).split('/')
 
 		return <NFTE contract={contract} tokenId={tokenId} darkMode={theme === 'dark'} className="mx-auto" style={{ '--nfte-colors-bg': 'black' }} apiUrl="/api/nft-data" />
 	}
 
-	if (typeof window !== 'undefined' && blockSize == 1 && shouldEmbed(href)) {
+	if (typeof window !== 'undefined' && shouldEmbed(href)) {
 		return <Embed url={href} isDark={theme === 'dark'} />
 	}
 
-	if (href.startsWith(`${ensDomain}.mirror.xyz`) || href.startsWith('/') || (typeof window !== 'undefined' && href.startsWith(window.location.origin))) {
-		return (
-			<Link href={href}>
-				<a className={getClass(accentColor)}>{children}</a>
-			</Link>
-		)
-	}
-
-	return (
-		// eslint-disable-next-line react/jsx-no-target-blank
-		<a href={href} target={href.startsWith('#') ? '' : '_blank'} rel="noopener" className={getClass(accentColor)}>
-			{children || 'hello'}
-		</a>
-	)
+	return <OpenGraph url={href}>{children}</OpenGraph>
 }
 
 const Block = ({ children }) => {

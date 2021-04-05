@@ -17,6 +17,9 @@ module.exports = {
 				sans: ['Inter', ...defaultTheme.fontFamily.sans],
 				mono: ['iAWriter Mono', ...defaultTheme.fontFamily.mono],
 			},
+			boxShadow: {
+				card: '0 0 0.5rem rgba(0, 0, 0, 0.075)',
+			},
 			typography: theme => ({
 				DEFAULT: {
 					css: {
@@ -77,8 +80,10 @@ module.exports = {
 								content: 'unset !important',
 							},
 						},
-						'.nfte *': {
+						'.nfte *, .opengraph *, .opengraph *:hover': {
 							margin: '0',
+							textDecoration: 'none',
+							borderRadius: 'unset',
 						},
 					},
 				},
