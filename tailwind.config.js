@@ -23,6 +23,7 @@ module.exports = {
 			typography: theme => ({
 				DEFAULT: {
 					css: {
+						whiteSpace: 'pre-wrap',
 						figcaption: {
 							textAlign: 'center',
 						},
@@ -42,6 +43,7 @@ module.exports = {
 							borderColor: theme('colors.blue.600'),
 						},
 						hr: {
+							borderTopWidth: '2px',
 							maxWidth: '12rem',
 							marginLeft: 'auto',
 							marginRight: 'auto',
@@ -106,8 +108,8 @@ module.exports = {
 						'ul > li::before': {
 							backgroundColor: theme('colors.gray.600'),
 						},
-						code: {
-							background: 'unset',
+						':not(pre) > code': {
+							background: theme('colors.gray.800'),
 							color: 'unset',
 						},
 						hr: {
