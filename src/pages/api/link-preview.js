@@ -7,7 +7,7 @@ import logoFetcher from 'metascraper-logo'
 import titleFetcher from 'metascraper-title'
 import imageFetcher from 'metascraper-image'
 import authorFetcher from 'metascraper-author'
-import requestImageSize from 'request-image-size'
+import calculateImageSize from '@/utils/images'
 import clearbitFetcher from 'metascraper-clearbit'
 import publisherFetcher from 'metascraper-publisher'
 import faviconFetcher from 'metascraper-logo-favicon'
@@ -32,7 +32,7 @@ export const getMeta = async url => {
 
 			meta[key] = {
 				url: meta[key],
-				...(await requestImageSize(meta[key])),
+				...(await calculateImageSize(meta[key])),
 				downloaded: undefined,
 			}
 		})
