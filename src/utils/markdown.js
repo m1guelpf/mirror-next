@@ -44,6 +44,40 @@ const LinkOrEmbed = ({ href, children, node: { blockSize } }) => {
 	return <OpenGraph url={href}>{children}</OpenGraph>
 }
 
+const getClass = accentColor => {
+	switch (accentColor) {
+		case 'purple':
+			return '!border-fuchsia-400'
+		case 'pink':
+			return '!border-red-500'
+		case 'red':
+			return '!border-red-500'
+		case 'orange':
+			return '!border-orange-400'
+		case 'yellow':
+			return '!border-yellow-400'
+		case 'teal':
+			return '!border-cyan-400'
+		case 'blue':
+			return '!border-blue-500'
+		case 'indigo':
+			return '!border-indigo-400'
+		case 'green':
+			return '!border-emerald-400'
+		case 'foreground':
+			return '!border-white'
+
+		default:
+			return '!border-blue-400'
+	}
+}
+
+const BlockQuote = ({ children }) => {
+	const { accentColor } = useTheme()
+
+	return <blockquote className={getClass(accentColor)}>{children}</blockquote>
+}
+
 const Block = ({ children }) => {
 	const blockAwareChildren = children.map(child => {
 		if (child.props.node) child.props.node.blockSize = children.length
@@ -57,6 +91,7 @@ const Block = ({ children }) => {
 export const components = {
 	image: Image,
 	link: LinkOrEmbed,
+	blockquote: BlockQuote,
 	paragraph: Block,
 }
 
