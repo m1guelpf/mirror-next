@@ -113,7 +113,8 @@ module.exports = {
 							color: 'unset',
 						},
 						hr: {
-							borderColor: theme('colors.gray.800'),
+							borderColor: theme('colors.gray.700'),
+							opacity: '0.6',
 						},
 					},
 				},
