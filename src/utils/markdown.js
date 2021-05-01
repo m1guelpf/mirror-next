@@ -30,7 +30,7 @@ const LinkOrEmbed = ({ href, children, node: { blockSize } }) => {
 	if (blockSize != 1) return <EntryLink href={href}>{children}</EntryLink>
 
 	if (new URL(href).protocol === 'ethereum:') {
-		const [contract, tokenId] = new URL(href).pathname.substring(2).split('/')
+		const [contract, tokenId] = href.split('ethereum://').substring(2).split('/')
 
 		return <NFT contract={contract} tokenId={tokenId} />
 	}
