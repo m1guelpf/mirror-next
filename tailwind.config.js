@@ -82,7 +82,7 @@ module.exports = {
 								content: 'unset !important',
 							},
 						},
-						'.nfte *, .opengraph *, .opengraph *:hover': {
+						'[data-nft] *, .opengraph *, .opengraph *:hover': {
 							margin: '0',
 							textDecoration: 'none',
 							borderRadius: 'unset',

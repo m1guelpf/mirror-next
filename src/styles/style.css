@@ -2,7 +2,6 @@
 @import "react-medium-image-zoom/dist/styles.css";
 @import "nprogress/nprogress.css";
 
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -25,4 +24,8 @@ button[aria-label="Zoom image"], button[aria-label="Unzoom image"] {
 
 .dark #nprogress .peg {
     box-shadow: 0 0 10px theme('colors.fuchsia.400'), 0 0 5px theme('colors.fuchsia.400');
+}
+
+.nfte--loaded .nfte__media {
+    aspect-ratio: unset !important;
 }

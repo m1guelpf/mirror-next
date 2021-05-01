@@ -1,13 +1,12 @@
-import Link from 'next/link'
 import Embed from 'react-embed'
 import Zoom from 'react-medium-image-zoom'
 import { useTheme } from '@/context/theme'
-import { getConfig } from '@/hooks/getConfig'
 import { shouldEmbed } from './embeds'
 import NextImage from 'next/image'
 import { useImageSizes } from '@/context/image_sizes'
 import { NFTE } from '@nfte/react'
 import OpenGraph from '@/components/OpenGraph'
+import NFT from '@/components/NFT'
 import EntryLink from '@/components/EntryLink'
 
 const Image = ({ alt, src }) => {
@@ -34,7 +33,11 @@ const LinkOrEmbed = ({ href, children, node: { blockSize } }) => {
 	if (new URL(href).protocol === 'ethereum:') {
 		const [contract, tokenId] = new URL(href).pathname.substring(2).split('/')
 
-		return <NFTE contract={contract} tokenId={tokenId} darkMode={theme === 'dark'} className="mx-auto" style={{ '--nfte-colors-bg': 'black' }} apiUrl="/api/nft-data" />
+		return (
+			<NFTE contract={contract} tokenId={tokenId} apiUrl="/api/nft-data">
+				{props => <NFT {...props} />}
+			</NFTE>
+		)
 	}
 
 	if (typeof window !== 'undefined' && shouldEmbed(href)) {
