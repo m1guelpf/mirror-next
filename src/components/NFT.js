@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import useSWR from 'swr'
 
 const NFT = ({ data: { contract, tokenId, metadata, name, description, ownerOf, ownerOfUrl, creatorOf, creatorOfUrl, platform, platformUrl, mediaUrl, mediaPageUrl, mediaMimeType, blockNumber, timestamp }, className, style, darkMode, autoPlay }) => {
 	return (
@@ -19,7 +20,7 @@ const NFT = ({ data: { contract, tokenId, metadata, name, description, ownerOf, 
 
 			{mediaUrl && mediaMimeType && (
 				<section className="nfte__media">
-					<Media media={mediaUrl} mediaMimeType={mediaMimeType} autoPlay={autoPlay} />
+					<Media media={mediaUrl} mediaMimeType={mediaMimeType} />
 				</section>
 			)}
 
@@ -31,7 +32,7 @@ const NFT = ({ data: { contract, tokenId, metadata, name, description, ownerOf, 
 							{isAddress(ownerOf) ? toTrimmedAddress(ownerOf) : ownerOf}
 						</a>
 					</p>
-					<a target="_blank" href={mediaPageUrl} className="!text-gray-500 text-sm !font-semibold">
+					<a target="_blank" href={mediaPageUrl} rel="noreferrer" className="!text-gray-500 text-sm !font-semibold">
 						<span>{mediaPageUrl?.includes('etherscan.io') ? 'View' : 'Buy / Bid'}</span> <span className="transform -rotate-45 text-sm inline-block !font-medium">→</span>
 					</a>
 				</div>
@@ -73,18 +74,41 @@ const TextMedia = ({ media }) => {
 	return <div>{content}</div>
 }
 
-const VideoMedia = ({ media, autoPlay }) => (
-	<video muted autoPlay={autoPlay} controls={!autoPlay} loop playsInline>
-		<source src={media} />
-	</video>
-)
+const VideoMedia = ({ media }) => {
+	const videoRef = useRef(null)
+	const [isMuted, setMuted] = useState(true)
+
+	useEffect(() => {
+		videoRef.current.muted = isMuted
+	}, [isMuted])
+
+	return (
+		<div className="relative">
+			<video ref={videoRef} muted autoPlay={true} controls={false} loop playsInline>
+				<source src={media} />
+			</video>
+			<button onClick={() => setMuted(state => !state)} className="absolute bottom-2 right-2 bg-white bg-opacity-10 !rounded-full p-2 text-white text-opacity-30 hover:text-opacity-70 focus:outline-none" style={{ backdropFilter: 'blur(2px) brightness(1.3)' }}>
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="transition w-6 h-6">
+					{isMuted ? (
+						<>
+							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" clipRule="evenodd"></path>
+							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path>
+						</>
+					) : (
+						<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
+					)}
+				</svg>
+			</button>
+		</div>
+	)
+}
 
 const AudioMedia = ({ media }) => <audio controls src={media}></audio>
 
-const Media = ({ media, mediaMimeType, autoPlay }) => {
+const Media = ({ media, mediaMimeType }) => {
 	if (mediaMimeType?.includes('text')) return <TextMedia media={media} />
 
-	if (mediaMimeType?.includes('video')) return <VideoMedia media={media} autoPlay={autoPlay} />
+	if (mediaMimeType?.includes('video')) return <VideoMedia media={media} />
 
 	if (mediaMimeType?.includes('audio')) return <AudioMedia media={media} />
 
@@ -104,10 +128,28 @@ const tsFormat = value => {
 	return `${String(dateObj.getUTCDate()).padStart(2, '0')}/${String(dateObj.getUTCMonth() + 1).padStart(2, '0')}/${dateObj.getUTCFullYear() - 2000}`
 }
 
-const Embed = ({ data, style, className, _, autoPlay }) => {
-	if (!data) return <Loading style={style} />
+const Embed = ({ contract, tokenId }) => {
+	const { data, error } = useSWR(() => `/api/nft-data?contract=${contract}&tokenId=${tokenId}`)
 
-	return <NFT data={data} className={className} style={style} autoPlay={autoPlay} />
+	if (error)
+		return (
+			<div className="rounded-md bg-red-50 p-4">
+				<div className="flex">
+					<div className="flex-shrink-0">
+						<svg className="h-5 w-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+							<path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd"></path>
+						</svg>
+					</div>
+					<div className="ml-3 flex-1 md:flex md:justify-between">
+						<p className="text-sm text-blue-700">The NFT embed failed to load</p>
+					</div>
+				</div>
+			</div>
+		)
+
+	if (!data && !error) return <Loading />
+
+	return <NFT data={data} />
 }
 
 export default Embed
