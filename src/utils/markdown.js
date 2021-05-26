@@ -7,6 +7,7 @@ import { useImageSizes } from '@/context/image_sizes'
 import OpenGraph from '@/components/OpenGraph'
 import NFT from '@/components/NFT'
 import EntryLink from '@/components/EntryLink'
+import { getConfig } from '@/hooks/getConfig'
 
 const Image = ({ alt, src }) => {
 	const { theme } = useTheme()
@@ -25,15 +26,21 @@ const Image = ({ alt, src }) => {
 }
 
 const LinkOrEmbed = ({ href, children, node: { blockSize } }) => {
+	const { ensDomain } = getConfig()
 	const { theme } = useTheme()
 
 	if (blockSize != 1) return <EntryLink href={href}>{children}</EntryLink>
 
 	if (new URL(href).protocol === 'ethereum:') {
-		console.log(href)
 		const [contract, tokenId] = href.split('ethereum://')[1].substring(2).split('/')
 
 		return <NFT contract={contract} tokenId={tokenId} />
+	}
+
+	if (new URL(href).protocol === 'crowdfund:') {
+		const [, crowdfundAddress] = href.match(/crowdfund:\/\/(\w*)/m)
+
+		return <EntryLink href={`https://${ensDomain}.mirror.xyz/crowdfunds/${crowdfundAddress}`}>{children}</EntryLink>
 	}
 
 	if (typeof window !== 'undefined' && shouldEmbed(href)) {
@@ -94,7 +101,7 @@ export const components = {
 	paragraph: Block,
 }
 
-const allowedLinkProtocols = ['http', 'https', 'mailto', 'tel', 'ethereum']
+const allowedLinkProtocols = ['http', 'https', 'mailto', 'tel', 'ethereum', 'crowdfund']
 
 export const uriTransformer = uri => {
 	const url = (uri || '').trim()
