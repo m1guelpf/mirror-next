@@ -6,8 +6,8 @@ export const getPublication = async () => {
 	const { ensDomain } = getConfig()
 
 	const {
-		data: { publication },
+		data: { publication, publicationContributors: contributors },
 	} = await mirrorQL.query({ query: fetchPublication, variables: { publication: ensDomain } })
 
-	return publication
+	return { publication, contributors }
 }

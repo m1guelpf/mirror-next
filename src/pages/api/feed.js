@@ -1,7 +1,6 @@
 import RSS from 'rss'
 import { getEntries } from '@/data/entries'
 import { getPublication } from '@/data/publication'
-import { getContributor } from '@/data/contributor'
 import unified from 'unified'
 import rehypeStringify from 'rehype-stringify'
 import remarkParse from 'remark-parse'
@@ -11,14 +10,14 @@ import remark2rehype from 'remark-rehype'
 export default async ({ headers: { host } }, res) => {
 	res.setHeader('Cache-Control', 's-maxage=86400')
 
-	let [publication, contributor, entries] = await Promise.all([getPublication(), getContributor(), getEntries()])
+	let [{ publication, contributors }, entries] = await Promise.all([getPublication(), getEntries()])
 	publication = { ...publication, ...JSON.parse(publication?.publicationSettings?.settings || '{}') }
 
 	const feed = new RSS({
 		title: publication.displayName,
 		description: publication.description || 'A Mirror publication',
 		image_url: publication.image,
-		managingEditor: contributor.name,
+		managingEditor: contributors.length == 1 ? contributors[0].name : publication.displayName,
 		webMaster: 'MirrorXYZ',
 		ttl: 1 * 60, // cache for an hour
 		site_url: `https://${host}/`,

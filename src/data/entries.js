@@ -1,17 +1,18 @@
 import slug from 'slug'
 import arweave from '@/lib/arweave'
-import { publicationAddress } from './ens'
+import { contributorAddresses } from './ens'
 import { arweaveQL } from '@/lib/graphql'
 import fetchSingleTransaction from '@/queries/arweave/fetch-single-transaction'
 import fetchTransactions from '@/queries/arweave/fetch-transactions'
 import { calculateSizes } from '@/utils/images'
+import { getConfig } from '@/hooks/getConfig'
 
 export const getEntryPaths = async () => {
 	const {
 		data: {
 			transactions: { edges },
 		},
-	} = await arweaveQL.query({ query: fetchTransactions, variables: { address: publicationAddress } })
+	} = await arweaveQL.query({ query: fetchTransactions, variables: { addresses: contributorAddresses } })
 
 	return edges
 		.map(({ node }) => {
@@ -28,9 +29,16 @@ export const getEntryPaths = async () => {
 }
 
 export const getEntries = async () => {
+	const { ensDomain } = getConfig()
 	const paths = await getEntryPaths()
 
-	return Promise.all(paths.map(async entry => formatEntry(JSON.parse(await arweave.transactions.getData(entry.path, { decode: true, string: true })), entry.slug)))
+	return (await Promise.all(paths.map(async entry => formatEntry(JSON.parse(await arweave.transactions.getData(entry.path, { decode: true, string: true })), entry.slug))))
+		.filter(entry => entry.publication == ensDomain)
+		.reduce((acc, current) => {
+			const x = acc.find(entry => entry.slug === current.slug)
+			if (!x) return acc.concat([current])
+			else return acc
+		}, [])
 }
 
 export const getEntry = async digest => {
@@ -52,6 +60,7 @@ export const getEntry = async digest => {
 const formatEntry = async (entry, transactionId) => ({
 	title: entry.content.title,
 	slug: slug(entry.content.title),
+	publication: entry.content.publication,
 	body: entry.content.body,
 	timestamp: entry.content.timestamp,
 	digest: entry.originalDigest,

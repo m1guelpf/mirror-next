@@ -10,5 +10,10 @@ export default gql`
 				settings
 			}
 		}
+		publicationContributors(ensLabel: $publication) {
+			address
+			displayName
+			avatarURL
+		}
 	}
 `

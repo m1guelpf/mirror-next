@@ -6,7 +6,6 @@ import { formatAddress } from '@/utils/address'
 import unified from 'unified'
 import remarkParse from 'remark-parse'
 import remarkStringify from 'remark-stringify'
-import { getContributor } from '../data/contributor'
 import highlightCode from '@/utils/highlightMarkdown'
 import { getEntry, getEntryPaths } from '@/data/entries'
 import { getPublication } from '@/data/publication'
@@ -14,7 +13,7 @@ import Head from 'next/head'
 import strip from 'strip-markdown'
 import ImageSizesContext from '@/context/image_sizes'
 
-const Article = ({ publication, entry, contributor }) => {
+const Article = ({ publication, contributors, entry }) => {
 	const router = useRouter()
 
 	if (router.isFallback) return <div>Loading...</div>
@@ -51,16 +50,22 @@ const Article = ({ publication, entry, contributor }) => {
 			<article>
 				<header>
 					<h1 className="text-gray-900 dark:text-gray-200 text-3xl sm:text-5xl font-bold">{entry.title}</h1>
-					<div className="flex items-center my-4 space-x-4">
-						<img className="rounded-full w-10 h-10" src={contributor.avatarURL} />
-						<div className="flex items-center tracking-normal text-gray-800 dark:text-gray-400">
-							<div className="flex items-center p-1 leading-5">
-								<p className="mr-2 font-medium">{contributor.displayName}</p>
-								<a className="border dark:border-gray-800 rounded-full px-1.5 font-medium text-sm text-gray-400  dark:text-gray-500" href={`https://etherscan.io/address/${entry.contributor}`} target="_blank" rel="noreferrer">
-									{entry.contributor.substr(0, 6)}
-								</a>
+					<div className="flex flex-wrap items-center my-4 gap-x-4 gap-y-2 max-w-xl">
+						{contributors.map(contributor => (
+							<div className="flex items-center" key={contributor.address}>
+								<img className="rounded-full w-10 h-10" src={contributor.avatarURL} />
+								<div className="flex items-center tracking-normal text-gray-800 dark:text-gray-400">
+									<div className="flex items-center p-1 leading-5">
+										<p className="mr-2 font-medium">{contributor.displayName}</p>
+										<a className="bg-gray-100 dark:bg-gray-800  rounded-full px-1.5 font-medium text-sm text-gray-400  dark:text-gray-500" href={`https://etherscan.io/address/${contributor.address}`} target="_blank" rel="noreferrer">
+											{contributor.address.substr(0, 6)}
+										</a>
+									</div>
+								</div>
 							</div>
-							<time dateTime={new Date(entry.timestamp * 1000)} className="block ml-2 font-medium text-gray-500 dark:text-gray-600">
+						))}
+						<div className="flex items-center">
+							<time dateTime={new Date(entry.timestamp * 1000)} className="block bg-gray-100 dark:bg-gray-800 rounded-full px-2 py-0.5 font-medium text-sm text-gray-400 dark:text-gray-500">
 								{timeago(entry.timestamp * 1000)}
 							</time>
 						</div>
@@ -122,7 +127,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params: { digest } }) {
 	try {
-		const [publication, contributor, entry] = await Promise.all([getPublication(), getContributor(), getEntry(digest)])
+		const [{ publication, contributors }, entry] = await Promise.all([getPublication(), getEntry(digest)])
 		const darkMode = JSON.parse(publication?.publicationSettings?.settings || '{ "darkMode": false }').darkMode
 
 		const body = await unified()
@@ -134,7 +139,7 @@ export async function getStaticProps({ params: { digest } }) {
 		return {
 			props: {
 				publication,
-				contributor,
+				contributors,
 				entry: { ...entry, body: String(body) },
 			},
 			revalidate: 1 * 60 * 60, // refresh article contents every hour
