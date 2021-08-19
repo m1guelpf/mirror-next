@@ -121,7 +121,7 @@ const Article = ({ publication, contributors, entry }) => {
 export async function getStaticPaths() {
 	return {
 		paths: (await getEntryPaths()).map(path => ({ params: { digest: path.slug } })),
-		fallback: true,
+		fallback: 'blocking',
 	}
 }
 
