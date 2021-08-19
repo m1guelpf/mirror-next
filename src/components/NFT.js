@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import useSWR from 'swr'
 
-const NFT = ({ data: { contract, tokenId, metadata, name, description, ownerOf, ownerOfUrl, creatorOf, creatorOfUrl, platform, platformUrl, mediaUrl, mediaPageUrl, mediaMimeType, blockNumber, timestamp }, className, style, darkMode, autoPlay }) => {
+const NFT = ({ data: { name, description, ownerOf, ownerOfUrl, creatorOf, platform, platformUrl, mediaUrl, mediaPageUrl, mediaMimeType, timestamp } }) => {
 	return (
 		<div className="shadow dark:shadow-none dark:bg-black rounded-lg max-w-lg mx-auto" data-nft>
 			<section className="flex items-center justify-between py-5 px-6">
