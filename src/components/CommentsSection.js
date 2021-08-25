@@ -1,10 +1,11 @@
-import { ethers } from 'ethers'
-import WalletConnectProvider from '@walletconnect/web3-provider'
-import { useEffect, useMemo, useState } from 'react'
 import useSWR from 'swr'
-import Web3Modal from 'web3modal'
 import axios from 'axios'
+import { ethers } from 'ethers'
+import Web3Modal from 'web3modal'
 import { format as timeago } from 'timeago.js'
+import { formatAddress } from '@/utils/address'
+import { useEffect, useMemo, useState } from 'react'
+import WalletConnectProvider from '@walletconnect/web3-provider'
 
 const serverWeb3 = new ethers.providers.InfuraProvider(null, process.env.NEXT_PUBLIC_INFURA_ID)
 
@@ -90,7 +91,7 @@ const CommentsSection = ({ digest, theme, className = '' }) => {
 							<img className="w-14 h-14 rounded-full flex-shrink-0" alt="profile image" src={comment.authorAvatar} />
 							<div className="flex-1">
 								<div className="flex items-center space-x-2">
-									<p className="text-sm text-gray-300 font-semibold">{comment.authorENS || comment.author}</p>
+									<p className="text-sm text-gray-300 font-semibold">{comment.authorENS || formatAddress(comment.author)}</p>
 									<p className="text-xs text-gray-500 font-medium">{timeago(new Date(parseInt(comment.createdOn)))}</p>
 								</div>
 								<p className="font-medium text-lg text-gray-400">{decodeURIComponent(comment.text)}</p>
