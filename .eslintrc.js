@@ -4,6 +4,7 @@ module.exports = {
 		browser: true,
 		es6: true,
 		commonjs: true,
+		node: true,
 	},
 	extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:prettier/recommended'],
 	globals: {
