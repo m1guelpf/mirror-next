@@ -1,24 +1,20 @@
-import { format as timeago } from 'timeago.js'
-import { useRouter } from 'next/router'
-import ReactMarkdown from 'react-markdown'
-import { components, uriTransformer } from '@/utils/markdown'
-import { formatAddress } from '@/utils/address'
+import Head from 'next/head'
 import unified from 'unified'
+import strip from 'strip-markdown'
 import remarkParse from 'remark-parse'
+import ReactMarkdown from 'react-markdown'
 import remarkStringify from 'remark-stringify'
+import { format as timeago } from 'timeago.js'
+import { formatAddress } from '@/utils/address'
+import { getPublication } from '@/data/publication'
+import ImageSizesContext from '@/context/image_sizes'
 import highlightCode from '@/utils/highlightMarkdown'
 import { getEntry, getEntryPaths } from '@/data/entries'
-import { getPublication } from '@/data/publication'
-import Head from 'next/head'
-import strip from 'strip-markdown'
-import ImageSizesContext from '@/context/image_sizes'
+import CommentsSection from '@/components/CommentsSection'
+import { components, uriTransformer } from '@/utils/markdown'
 
 const Article = ({ publication, contributors, entry }) => {
-	const router = useRouter()
-
-	if (router.isFallback) return <div>Loading...</div>
-
-	const { mailingListURL } = JSON.parse(publication?.publicationSettings?.settings || '{ "mailingListURL": null }')
+	const { mailingListURL, darkMode } = JSON.parse(publication?.publicationSettings?.settings || '{ "mailingListURL": null, "darkMode": false }')
 
 	// If there's an image we want to use the second paragraph as the description instead of the first one.
 	// We'll also strip the markdown from the description (to avoid things like links showing up) and trim the newline at the end
@@ -72,7 +68,7 @@ const Article = ({ publication, contributors, entry }) => {
 					</div>
 				</header>
 
-				<div className="prose lg:prose-lg dark:prose-dark pb-36">
+				<div className="prose lg:prose-lg dark:prose-dark pb-10">
 					<ImageSizesContext.Provider value={entry.image_sizes}>
 						<ReactMarkdown renderers={components} transformLinkUri={uriTransformer} allowDangerousHtml={true}>
 							{entry.body}
@@ -90,6 +86,8 @@ const Article = ({ publication, contributors, entry }) => {
 						</a>
 					</div>
 				)}
+
+				<CommentsSection className="max-w-prose text-lg mb-16" digest={entry.digest} theme={darkMode ? 'dark' : 'light'} />
 
 				<footer className="border dark:border-gray-800 rounded-lg divide-y dark:divide-gray-800 font-mono max-w-xl mx-auto">
 					{entry.transaction && (

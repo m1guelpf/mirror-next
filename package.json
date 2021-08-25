@@ -13,9 +13,12 @@
     "@nfte/handler": "^1.0.5",
     "@tailwindcss/jit": "^0.1.18",
     "@tailwindcss/typography": "^0.4.0",
+    "@walletconnect/web3-provider": "^1.6.4",
     "arweave": "^1.10.13",
     "autoprefixer": "^10.2.5",
-    "ethers": "^5.0.32",
+    "axios": "^0.21.1",
+    "cookie": "^0.4.1",
+    "ethers": "^5.4.5",
     "fathom-client": "^3.0.0",
     "fs": "^0.0.1-security",
     "graphql": "^15.5.0",
@@ -55,7 +58,8 @@
     "timeago.js": "^4.0.2",
     "tls": "^0.0.1",
     "unified": "^9.2.1",
-    "unist-util-visit": "^2.0.3"
+    "unist-util-visit": "^2.0.3",
+    "web3modal": "^1.9.4"
   },
   "devDependencies": {
     "eslint": "^7.21.0",

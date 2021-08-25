@@ -7,7 +7,7 @@ export default async ({ query: { contract, tokenId } }, res) => {
 	res.setHeader('Cache-Control', 's-maxage=86400')
 
 	// eslint-disable-next-line no-undef
-	const nftData = new NFTData({ provider: new ethers.providers.CloudflareProvider(), historicalProvider: new ethers.providers.InfuraProvider(null, process.env.INFURA_ID) })
+	const nftData = new NFTData({ provider: new ethers.providers.CloudflareProvider(), historicalProvider: new ethers.providers.InfuraProvider(null, process.env.NEXT_PUBLIC_INFURA_ID) })
 
 	res.json(await nftData.getData({ contract, tokenId }))
 }

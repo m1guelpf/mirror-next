@@ -36,7 +36,7 @@ You can view a demo of this project by visiting [m1guelpf.blog](https://m1guelpf
 
 You can deploy this project to Vercel (and load your own publication!) by clicking the button below:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fm1guelpf%2Fmirror-next&env=NEXT_PUBLIC_MIRROR_SUBDOMAIN,INFURA_ID&envDescription=The%20Mirror%20subdomain%20for%20the%20publication%20you%20want%20to%20load%2C%20and%20a%20free%20Infura%20project%20ID.&project-name=mirror-next&repo-name=mirror-next)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fm1guelpf%2Fmirror-next&env=NEXT_PUBLIC_MIRROR_SUBDOMAIN,NEXT_PUBLIC_INFURA_ID&envDescription=The%20Mirror%20subdomain%20for%20the%20publication%20you%20want%20to%20load%2C%20and%20a%20free%20Infura%20project%20ID.&project-name=mirror-next&repo-name=mirror-next)
 
 Once it's ready, you should be able to attach your custom domain from the Vercel settings page.
 
