@@ -69,7 +69,7 @@ const CommentsSection = ({ digest, theme, className = '' }) => {
 		const web3 = await web3Modal.connect().then(provider => new ethers.providers.Web3Provider(provider))
 		setWeb3(web3)
 
-		if (!document.cookie.includes('convo_authed')) authenticateConvo(web3)
+		if (!document.cookie.includes('convo_authed')) await authenticateConvo(web3)
 
 		const result = await axios.post('/api/comments/post', { signerAddress: await web3.getSigner().getAddress(), comment, digest }).then(res => res.data)
 
