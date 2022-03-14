@@ -8,7 +8,7 @@ import LinkButton from '@/components/LinkButton'
 import { getPublication } from '@/data/publication'
 import ImageSizesContext from '@/context/image_sizes'
 
-const Index = ({ entries, contributors }) => (
+const Index = ({ entries, publication }) => (
 	<div className="space-y-32 mb-10">
 		{entries.map(entry => (
 			<article key={entry.digest}>
@@ -16,7 +16,7 @@ const Index = ({ entries, contributors }) => (
 					<a className="text-gray-900 dark:text-gray-200 text-3xl sm:text-5xl font-bold">{entry.title}</a>
 				</Link>
 				<div className="flex flex-wrap items-center my-4 gap-x-4 gap-y-2 max-w-xl">
-					{contributors.map(contributor => (
+					{publication.members.map(contributor => (
 						<div className="flex items-center" key={contributor.address}>
 							<img className="rounded-full w-10 h-10" src={contributor.avatarURL} />
 							<div className="flex items-center tracking-normal text-gray-800 dark:text-gray-400">
@@ -54,12 +54,11 @@ const Index = ({ entries, contributors }) => (
 )
 
 export async function getStaticProps() {
-	const [{ publication, contributors }, entries] = await Promise.all([getPublication(), getEntries()])
+	const [publication, entries] = await Promise.all([getPublication(), getEntries()])
 
 	return {
 		props: {
 			publication,
-			contributors,
 			entries,
 		},
 		revalidate: 5 * 60, // refresh page index every 5 minutes

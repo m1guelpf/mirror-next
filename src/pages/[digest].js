@@ -13,9 +13,7 @@ import { getEntry, getEntryPaths } from '@/data/entries'
 import CommentsSection from '@/components/CommentsSection'
 import { components, uriTransformer } from '@/utils/markdown'
 
-const Article = ({ publication, contributors, entry }) => {
-	const { mailingListURL, darkMode } = JSON.parse(publication?.publicationSettings?.settings || '{ "mailingListURL": null, "darkMode": false }')
-
+const Article = ({ publication, darkMode, entry }) => {
 	// If there's an image we want to use the second paragraph as the description instead of the first one.
 	// We'll also strip the markdown from the description (to avoid things like links showing up) and trim the newline at the end
 	const metaDescription = String(
@@ -47,7 +45,7 @@ const Article = ({ publication, contributors, entry }) => {
 				<header>
 					<h1 className="text-gray-900 dark:text-gray-200 text-3xl sm:text-5xl font-bold">{entry.title}</h1>
 					<div className="flex flex-wrap items-center my-4 gap-x-4 gap-y-2 max-w-xl">
-						{contributors.map(contributor => (
+						{publication.members.map(contributor => (
 							<div className="flex items-center" key={contributor.address}>
 								<img className="rounded-full w-10 h-10" src={contributor.avatarURL} />
 								<div className="flex items-center tracking-normal text-gray-800 dark:text-gray-400">
@@ -76,9 +74,9 @@ const Article = ({ publication, contributors, entry }) => {
 					</ImageSizesContext.Provider>
 				</div>
 
-				{mailingListURL && (
+				{publication.mailingListURL && (
 					<div className="flex items-center justify-center mb-10">
-						<a href={mailingListURL} target="_blank" rel="noreferrer" className="bg-blue-100 dark:bg-yellow-400 dark:bg-opacity-20 font-medium text-blue-500 dark:text-yellow-300 rounded-lg p-4 hover:ring-4 ring-blue-100 dark:ring-yellow-400 dark:ring-opacity-20 transition duration-300 text-base shadow-xs hover:shadow-xs sm:text-lg sm:px-10 inline-flex items-center space-x-2">
+						<a href={publication.mailingListURL} target="_blank" rel="noreferrer" className="bg-blue-100 dark:bg-yellow-400 dark:bg-opacity-20 font-medium text-blue-500 dark:text-yellow-300 rounded-lg p-4 hover:ring-4 ring-blue-100 dark:ring-yellow-400 dark:ring-opacity-20 transition duration-300 text-base shadow-xs hover:shadow-xs sm:text-lg sm:px-10 inline-flex items-center space-x-2">
 							<svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
 							</svg>
@@ -125,8 +123,8 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params: { digest } }) {
 	try {
-		const [{ publication, contributors }, entry] = await Promise.all([getPublication(), getEntry(digest)])
-		const darkMode = JSON.parse(publication?.publicationSettings?.settings || '{ "darkMode": false }').darkMode
+		const [publication, entry] = await Promise.all([getPublication(), getEntry(digest)])
+		const darkMode = publication.theme.colorMode === 'DARK'
 
 		const body = await unified()
 			.use(remarkParse) // Parse markdown
@@ -137,7 +135,7 @@ export async function getStaticProps({ params: { digest } }) {
 		return {
 			props: {
 				publication,
-				contributors,
+				darkMode,
 				entry: { ...entry, body: String(body) },
 			},
 			revalidate: 1 * 60 * 60, // refresh article contents every hour

@@ -10,14 +10,13 @@ import remark2rehype from 'remark-rehype'
 export default async ({ headers: { host } }, res) => {
 	res.setHeader('Cache-Control', 's-maxage=86400')
 
-	let [{ publication, contributors }, entries] = await Promise.all([getPublication(), getEntries()])
-	publication = { ...publication, ...JSON.parse(publication?.publicationSettings?.settings || '{}') }
+	let [publication, entries] = await Promise.all([getPublication(), getEntries()])
 
 	const feed = new RSS({
 		title: publication.displayName,
 		description: publication.description || 'A Mirror publication',
-		image_url: publication.image,
-		managingEditor: contributors.length == 1 ? contributors[0].name : publication.displayName,
+		image_url: publication?.headerImage?.url,
+		managingEditor: publication.members.length == 1 ? publication.members[0].name : publication.displayName,
 		webMaster: 'MirrorXYZ',
 		ttl: 1 * 60, // cache for an hour
 		site_url: `https://${host}/`,

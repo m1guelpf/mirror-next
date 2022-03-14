@@ -3,11 +3,11 @@ import { mirrorQL } from '@/lib/graphql'
 import fetchPublication from '@/queries/mirror/fetch-publication'
 
 export const getPublication = async () => {
-	const { ensDomain } = getConfig()
+	const { publicationAddress } = getConfig()
 
 	const {
-		data: { publication, publicationContributors: contributors },
-	} = await mirrorQL.query({ query: fetchPublication, variables: { publication: ensDomain } })
+		data: { projectFeed: publication },
+	} = await mirrorQL.query({ query: fetchPublication, variables: { publicationAddress } })
 
-	return { publication, contributors }
+	return publication
 }

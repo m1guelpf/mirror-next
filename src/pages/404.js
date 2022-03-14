@@ -16,7 +16,7 @@ export async function getStaticProps() {
 	const { ensDomain } = getConfig()
 
 	const {
-		data: { publication },
+		data: { projectFeed: publication },
 	} = await mirrorQL.query({ query: fetchPublication, variables: { publication: ensDomain } })
 
 	return { props: { publication } }

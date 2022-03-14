@@ -3,9 +3,7 @@ import Head from 'next/head'
 import ThemeContext from '@/context/theme'
 
 const Layout = ({ publication, children }) => {
-	publication = { ...publication, ...JSON.parse(publication?.publicationSettings?.settings || '{}') }
-
-	if (publication?.darkMode && typeof document !== 'undefined') document.body.classList.add('dark')
+	if (publication.theme.colorMode === 'DARK' && typeof document !== 'undefined') document.body.classList.add('dark')
 
 	return (
 		<>
@@ -23,8 +21,8 @@ const Layout = ({ publication, children }) => {
 				<meta name="twitter:image" content={publication.avatarURL} />
 				<link rel="alternate" type="application/rss+xml" title={`${publication.displayName} — Mirror`} href="/feed.xml" />
 			</Head>
-			<ThemeContext.Provider value={{ theme: publication?.darkMode ? 'dark' : 'light', accentColor: publication.accentColor }}>
-				<div className={publication?.darkMode ? 'dark' : ''}>
+			<ThemeContext.Provider value={{ theme: publication.theme.colorMode === 'DARK' ? 'dark' : 'light', accentColor: publication.theme.accent.toLowerCase() }}>
+				<div className={publication.theme.colorMode === 'DARK' ? 'dark' : ''}>
 					<div className="dark:bg-gray-900 min-h-screen">
 						<header className="p-4">
 							<Link href="/">
@@ -34,7 +32,7 @@ const Layout = ({ publication, children }) => {
 										<h1 className="text-xl font-medium dark:text-gray-200">{publication.displayName}</h1>
 										<div className="flex items-center space-x-2">
 											<span className="rounded-full bg-gray-200 dark:bg-gray-800 px-1 text-sm text-gray-500 font-medium">ENS</span>
-											<p className="text-gray-400 dark:text-gray-600 pb-0.5">{publication.ensLabel}.mirror.xyz</p>
+											<p className="text-gray-400 dark:text-gray-600 pb-0.5">{publication.domain}</p>
 										</div>
 									</div>
 								</a>

@@ -1,19 +1,25 @@
 import { gql } from '@apollo/client'
 
 export default gql`
-	query PublicationInfo($publication: String!) {
-		publication(ensLabel: $publication) {
+	query PublicationInfo($publicationAddress: String!) {
+		projectFeed(projectAddress: $publicationAddress) {
 			displayName
 			avatarURL
-			ensLabel
-			publicationSettings {
-				settings
+			domain
+			headerImage {
+				url
 			}
-		}
-		publicationContributors(ensLabel: $publication) {
-			address
-			displayName
-			avatarURL
+			theme {
+				colorMode
+				accent
+			}
+			description
+			mailingListURL
+			members {
+				address
+				displayName
+				avatarURL
+			}
 		}
 	}
 `
