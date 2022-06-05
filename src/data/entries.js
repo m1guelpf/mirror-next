@@ -52,14 +52,17 @@ export const getEntry = async digest => {
 			transactions: {
 				edges: {
 					0: {
-						node: { id: transactionId },
+						node: {
+							id: transactionId,
+							block: { timestamp },
+						},
 					},
 				},
 			},
 		},
 	} = await arweaveQL.query({ query: fetchSingleTransaction, variables: { digest } })
 
-	return formatEntry(JSON.parse(await arweave.transactions.getData(transactionId, { decode: true, string: true })), transactionId)
+	return formatEntry(JSON.parse(await arweave.transactions.getData(transactionId, { decode: true, string: true })), transactionId, timestamp)
 }
 
 const formatEntry = async (entry, transactionId, timestamp) => ({
