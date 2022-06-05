@@ -1,7 +1,7 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client'
+import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client'
 
 export const mirrorQL = new ApolloClient({
-	uri: 'https://mirror-api.com/graphql',
+	link: new HttpLink({ uri: 'https://mirror-api.com/graphql', fetch, headers: { origin: 'https://mirror.xyz' } }),
 	cache: new InMemoryCache(),
 })
 

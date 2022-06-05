@@ -6,6 +6,9 @@ export default gql`
 			edges {
 				node {
 					id
+					block {
+						timestamp
+					}
 					tags {
 						name
 						value

@@ -18,21 +18,27 @@ export const getEntryPaths = async () => {
 		.map(({ node }) => {
 			const tags = Object.fromEntries(node.tags.map(tag => [tag.name, tag.value]))
 
-			return { slug: tags['Original-Content-Digest'], path: node.id }
+			return { slug: tags['Original-Content-Digest'], path: node.id, timestamp: node.block.timestamp }
 		})
 		.filter(entry => entry.slug && entry.slug !== '')
 		.reduce((acc, current) => {
-			const x = acc.find(entry => entry.slug === current.slug)
-			if (!x) return acc.concat([current])
-			else return acc
+			const x = acc.findIndex(entry => entry.slug === current.slug)
+			if (x == -1) return acc.concat([current])
+			else {
+				acc[x].timestamp = current.timestamp
+
+				return acc
+			}
 		}, [])
 }
 
 export const getEntries = async () => {
+	// const { ensDomain } = getConfig()
 	const paths = await getEntryPaths()
+	console.log(paths)
 
-	return (await Promise.all(paths.map(async entry => formatEntry(JSON.parse(await arweave.transactions.getData(entry.path, { decode: true, string: true })), entry.slug))))
-		.filter(entry => entry.contributor == publicationAddress)
+	return (await Promise.all(paths.map(async entry => formatEntry(JSON.parse(await arweave.transactions.getData(entry.path, { decode: true, string: true })), entry.slug, entry.timestamp))))
+		.sort((a, b) => b.timestamp - a.timestamp)
 		.reduce((acc, current) => {
 			const x = acc.find(entry => entry.slug === current.slug)
 			if (!x) return acc.concat([current])
@@ -56,12 +62,12 @@ export const getEntry = async digest => {
 	return formatEntry(JSON.parse(await arweave.transactions.getData(transactionId, { decode: true, string: true })), transactionId)
 }
 
-const formatEntry = async (entry, transactionId) => ({
+const formatEntry = async (entry, transactionId, timestamp) => ({
 	title: entry.content.title,
 	slug: slug(entry.content.title),
 	body: entry.content.body,
-	timestamp: entry.content.timestamp,
-	digest: entry.originalDigest,
+	timestamp,
+	digest: entry.originalDigest ?? entry.digest,
 	contributor: entry.authorship.contributor,
 	transaction: transactionId,
 	cover_image: (entry.content.body.split('\n\n')[0].match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || [])?.[1] || null,
