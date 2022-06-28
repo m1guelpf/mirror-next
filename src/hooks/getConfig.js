@@ -1,5 +1,5 @@
-import { publicationAddress } from '@/data/ens'
+import { contributorAddresses } from '@/data/ens'
 
 export const getConfig = () => {
-	return { ensDomain: process.env.NEXT_PUBLIC_MIRROR_SUBDOMAIN, publicationAddress }
+	return { ensDomain: process.env.NEXT_PUBLIC_MIRROR_SUBDOMAIN, publicationAddress: contributorAddresses[0] }
 }

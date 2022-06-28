@@ -1,18 +1,18 @@
 import Link from 'next/link'
 import ReactMarkdown from 'react-markdown'
-import { getEntries } from '@/data/entries'
 import { getExcerpt } from '@/utils/excerpt'
 import { components } from '@/utils/markdown'
 import { format as timeago } from 'timeago.js'
 import LinkButton from '@/components/LinkButton'
 import { getPublication } from '@/data/publication'
 import ImageSizesContext from '@/context/image_sizes'
+import { getEntries } from '@/data/entries'
 
 const Index = ({ entries, publication }) => (
 	<div className="space-y-32 mb-10">
 		{entries.map(entry => (
 			<article key={entry.digest}>
-				<Link href={`/${entry.digest}`}>
+				<Link href={`/${entry.transaction}`}>
 					<a className="text-gray-900 dark:text-gray-200 text-3xl sm:text-5xl font-bold">{entry.title}</a>
 				</Link>
 				<div className="flex flex-wrap items-center my-4 gap-x-4 gap-y-2 max-w-xl">
@@ -42,7 +42,7 @@ const Index = ({ entries, publication }) => (
 						</ReactMarkdown>
 					</ImageSizesContext.Provider>
 				</div>
-				{entry.body.split('\n\n').length > 4 && <LinkButton href={`/${entry.digest}`}>Continue Reading</LinkButton>}
+				{entry.body.split('\n\n').length > 4 && <LinkButton href={`/${entry.transaction}`}>Continue Reading</LinkButton>}
 			</article>
 		))}
 		{entries.length === 0 && (

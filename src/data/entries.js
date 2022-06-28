@@ -1,18 +1,18 @@
 import slug from 'slug'
 import arweave from '@/lib/arweave'
-import { publicationAddress } from './ens'
+import { contributorAddresses } from './ens'
 import { arweaveQL } from '@/lib/graphql'
 import fetchSingleTransaction from '@/queries/arweave/fetch-single-transaction'
 import fetchTransactions from '@/queries/arweave/fetch-transactions'
 import { calculateSizes } from '@/utils/images'
-import { getConfig } from '@/hooks/getConfig'
+// import { getConfig } from '@/hooks/getConfig'
 
 export const getEntryPaths = async () => {
 	const {
 		data: {
 			transactions: { edges },
 		},
-	} = await arweaveQL.query({ query: fetchTransactions, variables: { addresses: publicationAddress } })
+	} = await arweaveQL.query({ query: fetchTransactions, variables: { addresses: contributorAddresses } }).catch(error => console.log(error.networkError.result))
 
 	return edges
 		.map(({ node }) => {
@@ -33,6 +33,7 @@ export const getEntryPaths = async () => {
 }
 
 export const getEntries = async () => {
+	console.log('hi')
 	// const { ensDomain } = getConfig()
 	const paths = await getEntryPaths()
 	console.log(paths)
