@@ -9,5 +9,5 @@ export default async ({ query: { slug } }, res) => {
 
 	if (!entry) return res.redirect(308, '/')
 
-	return res.redirect(308, `/${entry.digest}`)
+	return res.redirect(308, `/${entry.transaction}`)
 }
