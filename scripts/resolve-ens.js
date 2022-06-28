@@ -13,5 +13,5 @@ module.exports = async () => {
 
 	const publicationAddress = await provider.resolveName(`${process.env.NEXT_PUBLIC_MIRROR_SUBDOMAIN}.mirror.xyz`)
 
-	fs.writeFileSync('./src/data/ens.js', `export const publicationAddress = "${publicationAddress}"\n`)
+	fs.writeFileSync('./src/data/ens.js', `export const contributorAddresses = ['${publicationAddress}']\n`)
 }
