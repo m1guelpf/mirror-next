@@ -12,7 +12,7 @@ export const getEntryPaths = async () => {
 		data: {
 			transactions: { edges },
 		},
-	} = await arweaveQL.query({ query: fetchTransactions, variables: { addresses: contributorAddresses } }).catch(error => console.log(error.networkError.result))
+	} = await arweaveQL.query({ query: fetchTransactions, variables: { addresses: contributorAddresses } })
 
 	return edges
 		.map(({ node }) => {
@@ -33,10 +33,7 @@ export const getEntryPaths = async () => {
 }
 
 export const getEntries = async () => {
-	console.log('hi')
-	// const { ensDomain } = getConfig()
 	const paths = await getEntryPaths()
-	console.log(paths)
 
 	return (await Promise.all(paths.map(async entry => formatEntry(JSON.parse(await arweave.transactions.getData(entry.path, { decode: true, string: true })), entry.slug, entry.timestamp))))
 		.sort((a, b) => b.timestamp - a.timestamp)
