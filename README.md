@@ -44,7 +44,7 @@ Once it's ready, you should be able to attach your custom domain from the Vercel
 
 **Is this decentralized?**
 
-Kind of. While I'm pulling the article listing and contents from the Arweave chain directly, the publication and contributor details come from Mirror's APIs.
+Kind of. While I'm pulling the entry listing and contents from the Arweave chain directly, the publication details come from Mirror's APIs.
 
 **Why did you make this?**
 
@@ -52,7 +52,7 @@ I like playing with stuff :). I really like Mirror's design, so I decided to cre
 
 **Who are you?**
 
-:wave: Hi! I'm [Miguel Piedrafita](https://twitter.com/m1guelpf), an 18-year-old indie maker, getting his toes deep into crypto. You can follow my journey and all the little things I make on the way [on Twitter](https://twitter.com/m1guelpf).
+:wave: Hi! I'm [Miguel Piedrafita](https://twitter.com/m1guelpf), an 20-year-old indie maker, getting his toes deep into crypto. You can follow my journey and all the little things I make on the way [on Twitter](https://twitter.com/m1guelpf).
 
 **I have another question**
 

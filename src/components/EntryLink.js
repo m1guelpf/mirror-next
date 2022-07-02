@@ -3,11 +3,10 @@ import { useTheme } from '@/context/theme'
 import { getConfig } from '@/hooks/getConfig'
 
 const EntryLink = ({ href, children, className }) => {
-	const { ensDomain } = getConfig()
 	const { accentColor } = useTheme()
 	className = className ? className : getClass(accentColor)
 
-	if (href.startsWith(`${ensDomain}.mirror.xyz`) || href.startsWith('/') || (typeof window !== 'undefined' && href.startsWith(window.location.origin))) {
+	if (href.startsWith('/') || (typeof window !== 'undefined' && href.startsWith(window.location.origin))) {
 		return (
 			<Link href={href}>
 				<a className={className}>{children}</a>
