@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { useTheme } from '@/context/theme'
-import { getConfig } from '@/hooks/getConfig'
 
 const EntryLink = ({ href, children, className }) => {
 	const { accentColor } = useTheme()
