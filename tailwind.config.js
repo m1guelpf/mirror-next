@@ -1,20 +1,20 @@
-const colors = require('tailwindcss/colors')
-const defaultTheme = require('tailwindcss/defaultTheme')
+import colors from 'tailwindcss/colors'
+import defaultTheme from 'tailwindcss/defaultTheme'
 
-module.exports = {
-	purge: ['./src/**/*.{js,ts,jsx,tsx}'],
+export default {
+	content: ['./src/**/*.{js,ts,jsx,tsx}'],
 	darkMode: 'class',
 	theme: {
 		extend: {
 			colors: {
-				gray: colors.trueGray,
+				gray: colors.neutral,
 				fuchsia: colors.fuchsia,
 				orange: colors.orange,
 				cyan: colors.cyan,
 				emerald: colors.emerald,
 			},
 			fontFamily: {
-				sans: ['Inter', ...defaultTheme.fontFamily.sans],
+				sans: ['var(--font-inter)', ...defaultTheme.fontFamily.sans],
 				mono: ['iAWriter Mono', ...defaultTheme.fontFamily.mono],
 			},
 			boxShadow: {
@@ -24,23 +24,27 @@ module.exports = {
 				DEFAULT: {
 					css: {
 						whiteSpace: 'pre-wrap',
+						'> *, blockquote > *': {
+							marginTop: '0 !important',
+							marginBottom: '0 !important',
+						},
 						figcaption: {
 							textAlign: 'center',
 						},
 						strong: {
 							fontWeight: theme('fontWeight.medium'),
 						},
-						// Image margin is handled by `figure`
 						img: {
 							marginTop: null,
 							marginBottom: null,
 							borderRadius: theme('borderRadius.lg'),
 						},
 						blockquote: {
-							borderLeftWidth: '2px',
+							display: 'flex',
 							fontStyle: null,
-							fontWeight: theme('fontWeight.normal'),
+							borderLeftWidth: '2px',
 							borderColor: theme('colors.blue.600'),
+							fontWeight: theme('fontWeight.normal'),
 						},
 						hr: {
 							borderTopWidth: '2px',
@@ -132,14 +136,6 @@ module.exports = {
 					},
 				},
 			}),
-		},
-	},
-	variants: {
-		extend: {
-			ringWidth: ['hover'],
-			padding: ['hover'],
-			backgroundOpacity: ['dark'],
-			typography: ['dark'],
 		},
 	},
 	plugins: [require('@tailwindcss/typography')],

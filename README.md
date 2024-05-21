@@ -13,30 +13,28 @@ You can view a demo of this project by visiting [m1guelpf.blog](https://m1guelpf
 -   [x] Patience page (when no articles exist)
 -   [x] Static generation (all pages should load instantly once deployed)
 -   [x] Static re-generation (new articles should appear without re-deploying)
--   [ ] Embeds
+-   [x] Embeds
     -   [x] Tweet embeds
     -   [x] YouTube embeds
     -   [x] Additional embeds (CodePen, JSBin, Gists, etc., not sure if supported by Mirror already)
     -   [x] NFT embeds
     -   [x] Bookmark cards (Open Graph)
-    -   [ ] NFT crowdfunding
-    -   [ ] NFT auctions
 -   [x] Email list support (when enabled on Mirror)
 -   [x] Pull content from Arweave
--   [ ] Write Mirror entry about this project
+-   [x] Write Mirror entry about this project
 
 ## Development
 
 -   Clone this repo in a local directory
--   Install dependencies (`yarn install` or `npm install`)
--   Copy the `.env.example` file to `.env.local`, and fill in your mirror subdomain and your [Infura Project ID](https://infura.io/dashboard/ethereum)
--   Start the server! (`yarn dev` or `npm run dev`)
+-   Install dependencies (`pnpm install`)
+-   Copy the `.env.example` file to `.env.local`, and fill in your mirror subdomain and an RPC URL
+-   Start the server! (`pnpm dev`)
 
 ## Deploying to Vercel
 
 You can deploy this project to Vercel (and load your own publication!) by clicking the button below:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fm1guelpf%2Fmirror-next&env=NEXT_PUBLIC_AUTHOR_ENS,NEXT_PUBLIC_INFURA_ID&envDescription=The%20ENS%20for%20the%20publication%20you%20want%20to%20load%2C%20and%20a%20free%20Infura%20project%20ID.&project-name=mirror-next&repo-name=mirror-next)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fm1guelpf%2Fmirror-next&env=NEXT_PUBLIC_AUTHOR_ENS,NEXT_PUBLIC_RPC_URL&envDescription=The%20ENS%20for%20the%20publication%20you%20want%20to%20load%2C%20and%20an%20RPC%20URL.&project-name=mirror-next&repo-name=mirror-next)
 
 Once it's ready, you should be able to attach your custom domain from the Vercel settings page.
 
@@ -52,7 +50,7 @@ I like playing with stuff :). I really like Mirror's design, so I decided to cre
 
 **Who are you?**
 
-:wave: Hi! I'm [Miguel Piedrafita](https://twitter.com/m1guelpf), an 20-year-old indie maker, getting his toes deep into crypto. You can follow my journey and all the little things I make on the way [on Twitter](https://twitter.com/m1guelpf).
+:wave: Hi! I'm [Miguel Piedrafita](https://twitter.com/m1guelpf), an 22-year-old maker. You can follow my journey and all the little things I make on the way [on Twitter](https://twitter.com/m1guelpf).
 
 **I have another question**
 

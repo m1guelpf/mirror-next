@@ -1,17 +1,22 @@
-/* eslint-disable no-undef */
-const fs = require('fs')
-const { ethers } = require('ethers')
+import fs from 'fs'
+import { normalize } from 'viem/ens'
+import { mainnet } from 'viem/chains'
+import { createPublicClient, http } from 'viem'
 
-module.exports = async () => {
-	if (fs.existsSync('./src/data/ens.js')) {
-		// If the author ENS wasn't set on the first run, we might have an invalid publication address.
-		// This makes sure invalid addresses are re-calculated on every run instead of just the first one.
-		if (!String(fs.readFileSync('./src/data/ens.js')).includes("'null'")) return
+export default async () => {
+	if (!process.env.NEXT_PUBLIC_AUTHOR_ENS) {
+		console.error('NEXT_PUBLIC_AUTHOR_ENS is not set')
 	}
 
-	const provider = new ethers.providers.InfuraProvider('mainnet', process.env.NEXT_PUBLIC_INFURA_ID)
+	if (fs.existsSync('./src/data/ens.ts')) {
+		// If the author ENS wasn't set on the first run, we might have an invalid publication address.
+		// This makes sure invalid addresses are re-calculated on every run instead of just the first one.
+		if (!String(fs.readFileSync('./src/data/ens.ts')).includes("'null'")) return
+	}
 
-	const publicationAddress = await provider.resolveName(process.env.NEXT_PUBLIC_AUTHOR_ENS)
+	const client = createPublicClient({ chain: mainnet, transport: http(process.env.NEXT_PUBLIC_RPC_URL) })
 
-	fs.writeFileSync('./src/data/ens.js', `export const contributorAddresses = ['${publicationAddress}']\n`)
+	const publicationAddress = await client.getEnsAddress({ name: normalize(process.env.NEXT_PUBLIC_AUTHOR_ENS) })
+
+	fs.writeFileSync('./src/data/ens.ts', `export const contributorAddresses = ['${publicationAddress}']\n`)
 }

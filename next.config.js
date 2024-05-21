@@ -1,23 +1,11 @@
-require('./scripts/resolve-ens')()
+import resolveEns from './scripts/resolve-ens.js'
 
-module.exports = {
-	images: {
-		domains: ['images.mirror-media.xyz'],
-	},
-	webpack5: true,
-	webpack: (config, { dev, isServer }) => {
-		if (!dev && !isServer) {
-			Object.assign(config.resolve.alias, {
-				react: 'preact/compat',
-				'react-dom': 'preact/compat',
-			})
-		}
+export default () => {
+	resolveEns()
 
-		return config
-	},
-	rewrites: async () => [
-		{ source: '/feed.xml', destination: '/api/feed' },
-		{ source: '/posts.json', destination: '/api/posts' },
-		{ source: '/post/:slug', destination: '/api/post' },
-	],
+	return {
+		images: {
+			remotePatterns: [{ hostname: 'images.mirror-media.xyz' }],
+		},
+	}
 }

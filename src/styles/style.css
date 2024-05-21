@@ -1,31 +1,14 @@
-@import url('https://rsms.me/inter/inter.css');
-@import "react-medium-image-zoom/dist/styles.css";
-@import "nprogress/nprogress.css";
+@import 'react-medium-image-zoom/dist/styles.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-button[aria-label="Zoom image"], button[aria-label="Unzoom image"] {
-    @apply outline-none focus-visible:ring;
-}
-
-#nprogress .bar {
-    background: #000000 !important;
-}
-
-#nprogress .peg {
-    box-shadow: 0 0 10px #000000, 0 0 5px #000000;
-}
-
-.dark #nprogress .bar {
-    background: theme('colors.fuchsia.400') !important;
-}
-
-.dark #nprogress .peg {
-    box-shadow: 0 0 10px theme('colors.fuchsia.400'), 0 0 5px theme('colors.fuchsia.400');
+button[aria-label='Zoom image'],
+button[aria-label='Unzoom image'] {
+	@apply outline-none focus-visible:ring;
 }
 
 .nfte--loaded .nfte__media {
-    aspect-ratio: unset !important;
+	aspect-ratio: unset !important;
 }
