@@ -27,7 +27,7 @@ const EntryLink: FC<Props> = ({ href, children, className }) => {
 }
 
 const getClass = (accentColor: string): string => {
-	switch (accentColor) {
+	switch (accentColor.toLowerCase()) {
 		case 'purple':
 			return '!text-fuchsia-400'
 		case 'pink':

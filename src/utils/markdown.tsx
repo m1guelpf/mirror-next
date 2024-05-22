@@ -60,7 +60,7 @@ export const LinkOrEmbed = ({ href, children, ...props }) => {
 }
 
 const getClass = (accentColor: string): string => {
-	switch (accentColor) {
+	switch (accentColor.toLowerCase()) {
 		case 'purple':
 			return '!border-fuchsia-400'
 		case 'pink':
